@@ -48,14 +48,6 @@ public class LoginCommand implements Command {
             logger.log(Level.WARN, "Already logged in");
             resultPage = CommandProvider.GO_TO_PROFILE.preform(request, response);
         }
-
-        int a = 5;
-        switch (a) {
-            case 3, 4, 5 -> {
-
-            }
-        }
-
         return resultPage;
     }
 }
