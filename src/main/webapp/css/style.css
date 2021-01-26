@@ -1,0 +1,20 @@
+div .nav-item {
+    text-transform: uppercase;
+}
+
+.mini-avatar {
+    border-radius: 50%;
+    height: 35px;
+}
+
+.language-selector {
+    margin-right: 50px;
+}
+
+.user-mini-profile::after {
+    background-color: #ccc;
+}
+
+.user-mini-profile:hover::after {
+    background-color: #FFF;
+}
