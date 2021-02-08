@@ -11,8 +11,8 @@
 <body>
 <jsp:include page="head.jsp"/>
 ${error_message}
-<form action="login" method="get" class="login-form">
-    <input type="hidden" name="command_id" value="login">
+<form action="login.do" method="get" class="login-form">
+    <input type="hidden" name="command" value="login">
     <div class="mb-3">
         <label for="login-field" class="form-label"><fmt:message key="login.login"/></label>
         <input type="text" name="login" class="form-control" id="login-field" pattern="[A-Za-z0-9]{4,16}" title="<fmt:message key="login.login_hint"/>" required="required">
@@ -25,8 +25,8 @@ ${error_message}
         <button type="submit" class="btn btn-primary login-submit-button"><fmt:message key="login.submit"/></button>
     </div>
 </form>
-<form action="${pageContext.request.contextPath}/register" method="get">
-    <input type="hidden" name="command_id" value="go_to_register">
+<form action="register.do" method="get">
+    <input type="hidden" name="command" value="go_to_register">
     <input type="submit" value="Sing up">
 </form>
 <script src="${pageContext.request.contextPath}/js/login.js"></script>

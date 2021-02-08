@@ -14,8 +14,8 @@
     <fmt:message key="register.title"/>
 </h1>
 ${error_message}
-<form action="register" method="get">
-    <input type="hidden" name="command_id" value="register">
+<form action="register.do" method="get">
+    <input type="hidden" name="command" value="register">
     <div class="mb-3">
         <label for="login-field" class="form-label"><fmt:message key="register.login"/></label>
         <input type="text" name="login" class="form-control" id="login-field"
@@ -58,8 +58,8 @@ ${error_message}
     <br>
     <input type="submit" value="<fmt:message key="register.submit"/>">
 </form>
-<form action="${pageContext.request.contextPath}/login" method="get">
-    <input type="hidden" name="command_id" value="go_to_login">
+<form action="${pageContext.request.contextPath}/login.do" method="get">
+    <input type="hidden" name="command" value="go_to_login">
     <input type="submit" value="<fmt:message key="register.go_to_login"/>">
 </form>
 </body>

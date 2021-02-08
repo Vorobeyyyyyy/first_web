@@ -11,10 +11,7 @@ div .nav-item {
     margin-right: 50px;
 }
 
-.user-mini-profile::after {
-    background-color: #ccc;
-}
-
-.user-mini-profile:hover::after {
-    background-color: #FFF;
+.user-mini-profile:hover {
+    background-color: #007bff;
+    border-radius: 3px;
 }

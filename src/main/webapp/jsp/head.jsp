@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
-<jsp:useBean id="user" class="com.vorobyev.first_web.entity.User" scope="session"/>
+<jsp:useBean id="user" class="com.vorobyev.fwb.entity.User" scope="session"/>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
 
@@ -34,15 +34,15 @@
                             <fmt:message key="header.language"/>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/locale?command_id=set_locale&language=ru&prev_page=${pageContext.request.requestURI}">Русский</a>
-                            <a class="dropdown-item" href="${pageContext.request.contextPath}/locale?command_id=set_locale&language=en&prev_page=${pageContext.request.requestURI}">English</a>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/locale.do?command=set_locale&language=ru&prev_page=${pageContext.request.requestURI}">Русский</a>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/locale.do?command=set_locale&language=en&prev_page=${pageContext.request.requestURI}">English</a>
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <ul class="navbar-nav ml-auto user-mini-profile">
+                <li class="nav-item" ${!is_login?"hidden=\"hidden\"":""}>
+                    <ul class="navbar-nav ml-auto user-mini-profile pl-2">
                         <li>
-                            <input type="image" src="${pageContext.request.contextPath}/image/avatar.jpg" class="mini-avatar" alt="Avatar">
+                            <input type="image" src="${pageContext.request.contextPath}/image/avatar.jpg" class="mini-avatar pt-1" alt="Avatar">
                         </li>
                         <li>
                             <div class="dropdown">
@@ -61,7 +61,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="nav-link" href="${pageContext.request.contextPath}/login?command_id=go_to_login#"><fmt:message key="header.login"/></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/login.do?command=go_to_login#" ${is_login?"hidden=\"hidden\"":""}><fmt:message key="header.login"/></a>
                 </li>
             </ul>
         </div>
