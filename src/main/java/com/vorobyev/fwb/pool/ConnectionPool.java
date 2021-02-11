@@ -31,8 +31,6 @@ public class ConnectionPool {
 
     private int givenConnectionPerPeriod = 0;
 
-    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-
     public static ConnectionPool getInstance() {
         return INSTANCE;
     }
@@ -54,6 +52,7 @@ public class ConnectionPool {
                 throw new RuntimeException("Cant initialize connection pool");
             }
         }
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         executorService.scheduleAtFixedRate(ConnectionPoolCleaner.INSTANCE, 0, CLEAR_PERIOD_IN_SECONDS, TimeUnit.SECONDS);
     }
 
