@@ -38,9 +38,11 @@ public class GoToPublicationCommand implements Command {
                     path = WebPagePath.ERROR404;
                 }
             } catch (ServiceException exception) {
+                logger.log(Level.ERROR, exception.getMessage());
                 path = WebPagePath.ERROR404;
             }
         } catch (NumberFormatException exception) {
+            logger.log(Level.ERROR, exception.getMessage());
             path = WebPagePath.ERROR404;
         }
         return path;

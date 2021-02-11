@@ -22,6 +22,7 @@ public class ConnectionPool {
     private static final int CLEAR_CONNECTIONS_REQUESTS_COUNT = 100;
 
     private static final int CLEAR_PERIOD_IN_SECONDS = 60;
+    private static final int CLEAR_DELIMITER = 2;
 
     private static final ConnectionPool INSTANCE = new ConnectionPool();
 
@@ -92,7 +93,7 @@ public class ConnectionPool {
     void removeUnnecessaryConnections() {
         int removedConnections = 0;
         if (givenConnectionPerPeriod < CLEAR_CONNECTIONS_REQUESTS_COUNT) {
-            int connectionsToRemoveCount = (findTotalConnectionsCount() - MIN_POOL_SIZE) / 2;
+            int connectionsToRemoveCount = (findTotalConnectionsCount() - MIN_POOL_SIZE) / CLEAR_DELIMITER;
             while (connectionsToRemoveCount-- != 0 && !freeConnections.isEmpty()) {
                 try {
                     ProxyConnection proxyConnection = freeConnections.take();

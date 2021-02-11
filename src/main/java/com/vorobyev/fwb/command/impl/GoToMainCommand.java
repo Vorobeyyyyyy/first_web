@@ -28,6 +28,7 @@ public class GoToMainCommand implements Command {
 
     @Override
     public String preform(HttpServletRequest request, HttpServletResponse response) {
+        String path;
         String pageIndexString = request.getParameter(PAGE_INDEX);
         int pageIndex;
         try {
@@ -38,9 +39,11 @@ public class GoToMainCommand implements Command {
         try {
             List<Publication> publications = publicationService.findPublications(pageIndex * PUBLICATION_PER_PAGE, PUBLICATION_PER_PAGE);
             request.setAttribute(NEWS, publications);
+            path = WebPagePath.MAIN;
         } catch (ServiceException exception) {
             logger.log(Level.ERROR, exception.getMessage());
+            path = WebPagePath.ERROR500;
         }
-        return WebPagePath.MAIN;
+        return path;
     }
 }

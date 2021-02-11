@@ -13,5 +13,7 @@ public class WebPagePath {
 
     public final static String ERROR404 = "/jsp/error404.jsp";
 
+    public final static String ERROR500 = "/jsp/error500.jsp";
+
     private WebPagePath() {}
 }
