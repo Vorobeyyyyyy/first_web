@@ -72,7 +72,7 @@ public class ConnectionPool {
                 connection = freeConnections.take();
                 givenConnections.offer(connection);
             } catch (InterruptedException exception) {
-                throw new ConnectionPoolException();
+                throw new ConnectionPoolException(exception); //todo change to thread.interrupt
             }
         }
         logger.log(Level.INFO, "Connection has been given");
