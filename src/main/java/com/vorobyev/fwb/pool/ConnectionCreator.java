@@ -25,6 +25,7 @@ class ConnectionCreator {
             Class.forName(driver);
         } catch (IOException | ClassNotFoundException exception) {
             LOGGER.log(Level.FATAL, "Error during connection creation", exception);
+            throw new RuntimeException(exception);
         }
     }
 
