@@ -53,7 +53,7 @@ public class ConnectionPool {
                 throw new RuntimeException("Cant initialize connection pool");
             }
         }
-        executorService.scheduleAtFixedRate(ConnectionPoolCleaner.INSTANCE, 0, CLEAR_PERIOD_IN_SECONDS, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(ConnectionPoolCleaner.INSTANCE, 0, CLEAR_PERIOD_IN_SECONDS, TimeUnit.SECONDS); //fixme хрень какая-то, вызывается несколько раз
     }
 
     public Connection getConnection() throws ConnectionPoolException {

@@ -5,5 +5,7 @@ public class SessionAttributeName {
 
     public final static String USER = "user";
 
+    public final static String LOCALE = "locale";
+
     private SessionAttributeName() {}
 }

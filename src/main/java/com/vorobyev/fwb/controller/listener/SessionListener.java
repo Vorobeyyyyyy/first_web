@@ -13,5 +13,6 @@ public class SessionListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se) {
         HttpSession session = se.getSession();
         session.setAttribute(SessionAttributeName.IS_LOGIN, false);
+        session.setAttribute(SessionAttributeName.LOCALE, "ru");
     }
 }

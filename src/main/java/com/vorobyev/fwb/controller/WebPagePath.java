@@ -7,5 +7,11 @@ public class WebPagePath {
 
     public final static String PROFILE = "/jsp/successfully_login.jsp";
 
+    public final static String MAIN = "/jsp/main.jsp";
+
+    public final static String PUBLICATION = "/jsp/publication.jsp";
+
+    public final static String ERROR404 = "/jsp/error404.jsp";
+
     private WebPagePath() {}
 }

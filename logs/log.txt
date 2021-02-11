@@ -142,3 +142,9 @@ java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
 	at org.testng.TestNG.run(TestNG.java:1037) [testng-7.3.0.jar:?]
 	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:66) [testng-rt.jar:?]
 	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:109) [testng-rt.jar:?]
+23:14:57.245 [pool-2-thread-1] INFO  vorobyev.fwb.pool.ConnectionPool.removeUnnecessaryConnections - Removed 0 connections
+23:14:57.294 [main] INFO  vorobyev.fwb.pool.ConnectionPool.getConnection - Connection has been given
+23:14:57.340 [main] INFO  vorobyev.fwb.pool.ConnectionPool.releaseConnection - Connections has been released
+23:47:54.838 [pool-2-thread-1] INFO  vorobyev.fwb.pool.ConnectionPool.removeUnnecessaryConnections - Removed 0 connections
+23:47:54.891 [main] INFO  vorobyev.fwb.pool.ConnectionPool.getConnection - Connection has been given
+23:47:54.929 [main] INFO  vorobyev.fwb.pool.ConnectionPool.releaseConnection - Connections has been released

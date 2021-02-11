@@ -1,0 +1,154 @@
+:root {
+    --font: "Open Sans Condensed", "Segoe UI", "Helvetica Neue", Helvetica, Tahoma, sans-serif;
+    --background_color:  rgb(219, 219, 219);
+}
+
+.news {
+    width: 900px;
+    flex-direction: column;
+}
+
+.main_image {
+    margin: 10px;
+    width: 350px;
+}
+
+.news_header {
+    display: flex;
+    flex-direction: row;
+}
+
+.news_header_text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.news_topic {
+    margin: 5px;
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 30px;
+    font-family: var(--font);
+    font-weight: 650;
+    line-height: 35px;
+}
+
+.bottom_line {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+    margin-right: 15px;
+    padding: 5px;
+    justify-content: space-between;
+}
+
+.bottom_line_text {
+    font-family: var(--font);
+    color: rgb(99, 99, 99);
+}
+
+.news_body {
+    font-family: var(--font);
+    margin: 5px;
+    margin-top: 20px;
+    padding: 5px;
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+}
+
+.news_body img {
+    margin: 20px;
+    align-self: center;
+}
+
+.next_prev {
+    width: 900px;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.next_prev_button {
+    height: 40px;
+    width: 120px;
+    margin: 15px 0px 15px 0px;
+    font-family: var(--font);
+    font-size: 20px;
+    text-align: right;
+    background-color: #ffffff;
+    border: none;
+    transition: 0.2s;
+}
+
+.next_prev_button:hover {
+    background-color: #5c94c8;
+    transition: 0.2s;
+}
+
+.next_prev_button + .next_prev_button {
+    margin-left: 10px;
+    text-align: left;
+}
+
+.commends {
+    flex-direction: column;
+    width: 900px;
+}
+
+.commends_title {
+    font-family: var(--font);
+    align-self: center;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.commend {
+    margin: 0px 10px 15px 10px;
+    padding: 5px;
+    background-color: var(--background_color)
+}
+
+.commend_title {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.commentator_name {
+    font-weight: bold;
+    font-style: var(--font);
+    font-size: 20px;
+    margin-right: auto;
+}
+
+.commentator_img {
+    width: 25px;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.commend_text {
+    margin-left: 10px;
+    font-size: 17px;
+}
+
+.comment_date {
+    font-size: 15px;
+    font-family: var(--font);
+    margin-right: 30px;
+    color: rgb(78, 78, 78);
+}
+
+.like_button {
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: var(--font);
+    font-weight: bold;
+    border-radius: 5px;
+}

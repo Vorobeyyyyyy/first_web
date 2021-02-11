@@ -14,7 +14,9 @@ public enum CommandProvider implements Command {
     GO_TO_REGISTER(new GoToRegisterCommand()),
     LOGOUT(new LogoutCommand()),
     GO_TO_PROFILE(new GoToProfileCommand()),
-    SET_LOCALE(new LocaleCommand());
+    SET_LOCALE(new LocaleCommand()),
+    GO_TO_MAIN(new GoToMainCommand()),
+    GO_TO_PUBLICATION(new GoToPublicationCommand());
 
     Command command;
 

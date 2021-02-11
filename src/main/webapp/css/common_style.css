@@ -1,0 +1,27 @@
+:root {
+    --background_color:  rgb(219, 219, 219);
+}
+
+body {
+    background-color: var(--background_color);
+}
+
+.main_holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section {
+    margin: 15px;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(255, 255, 255);
+    width: 700px;
+    transition: 1s;
+}
+
+.section_title {
+    margin-left: 10px;
+    font-size: 30px;
+}

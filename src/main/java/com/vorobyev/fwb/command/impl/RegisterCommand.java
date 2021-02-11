@@ -2,6 +2,7 @@ package com.vorobyev.fwb.command.impl;
 
 import com.vorobyev.fwb.command.Command;
 import com.vorobyev.fwb.command.CommandProvider;
+import com.vorobyev.fwb.controller.WebPagePath;
 import com.vorobyev.fwb.entity.User;
 import com.vorobyev.fwb.exception.ServiceException;
 import com.vorobyev.fwb.service.impl.UserServiceImpl;
@@ -43,15 +44,15 @@ public class RegisterCommand implements Command {
                 User user = userService.register(login, password, firstName, secondName, phoneNumber, email);
                 session.setAttribute(SessionAttributeName.IS_LOGIN, true);
                 session.setAttribute(SessionAttributeName.USER, user);
-                resultPage = CommandProvider.GO_TO_PROFILE.preform(request, response);
+                resultPage = WebPagePath.PROFILE;
             } catch (ServiceException exception) {
                 logger.log(Level.ERROR, exception.getMessage());
                 request.setAttribute(ERROR_MESSAGE, exception.getMessage());
-                resultPage = CommandProvider.GO_TO_PROFILE.preform(request, response);
+                resultPage = WebPagePath.PROFILE;
             }
         } else {
             logger.log(Level.WARN, "Already logged in");
-            resultPage = CommandProvider.GO_TO_PROFILE.preform(request, response);
+            resultPage = WebPagePath.PROFILE;
         }
         return resultPage;
     }
