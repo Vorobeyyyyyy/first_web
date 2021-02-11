@@ -31,7 +31,7 @@ public class GoToPublicationCommand implements Command {
             publicationId = Long.parseLong(request.getParameter(PUBLICATION_ID));
             try {
                 Optional<Publication> optionalPublication = publicationService.findPublicationById(publicationId);
-                if (optionalPublication.isPresent()) {
+                if (optionalPublication.isPresent()) {  //fixme orElse
                     request.setAttribute(PUBLICATION, optionalPublication.get());
                     path = WebPagePath.PUBLICATION;
                 } else {
@@ -40,12 +40,9 @@ public class GoToPublicationCommand implements Command {
             } catch (ServiceException exception) {
                 path = WebPagePath.ERROR404;
             }
-
         } catch (NumberFormatException exception) {
             path = WebPagePath.ERROR404;
         }
-
-
         return path;
     }
 }
