@@ -10,7 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionCreator {
+class ConnectionCreator {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Properties PROPERTIES = new Properties();
     private static final String PROPERTIES_PATH = "config/database.properties";
@@ -31,7 +31,7 @@ public class ConnectionCreator {
     private ConnectionCreator() {
     }
 
-    public static Connection createConnection() throws SQLException {
+    static Connection createConnection() throws SQLException {
         return DriverManager.getConnection(PROPERTIES.getProperty(URL_PROPERTY), PROPERTIES);
     }
 }
