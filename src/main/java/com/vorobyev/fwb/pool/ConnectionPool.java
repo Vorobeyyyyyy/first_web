@@ -31,7 +31,7 @@ public class ConnectionPool {
 
     private int givenConnectionPerPeriod = 0;
 
-    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     public static ConnectionPool getInstance() {
         return INSTANCE;
