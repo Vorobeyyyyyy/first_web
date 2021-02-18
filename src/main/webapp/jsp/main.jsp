@@ -8,11 +8,12 @@
 <html>
 <head>
     <title><fmt:message key="main.title"/></title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_style.css" >
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main_style.css">
 </head>
 
 <body>
-<jsp:include page="head.jsp"/>
+<%@ include file="header.jsp"%>
 <div class="news_placeholder">
     <c:forEach items="${news}" var="item">
         <div class="news_element">

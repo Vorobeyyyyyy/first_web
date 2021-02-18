@@ -1,6 +1,7 @@
 package com.vorobyev.fwb.command.impl;
 
 import com.vorobyev.fwb.command.Command;
+import com.vorobyev.fwb.controller.ErrorPageAttribute;
 import com.vorobyev.fwb.controller.WebPagePath;
 import com.vorobyev.fwb.entity.Publication;
 import com.vorobyev.fwb.exception.ServiceException;
@@ -16,11 +17,8 @@ import java.util.Optional;
 
 public class GoToPublicationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-
     private static final PublicationService publicationService = PublicationServiceImpl.INSTANCE;
-
     private static final String PUBLICATION_ID = "publication_id";
-
     private static final String PUBLICATION = "publication";
 
     @Override
@@ -31,19 +29,23 @@ public class GoToPublicationCommand implements Command {
             publicationId = Long.parseLong(request.getParameter(PUBLICATION_ID));
             try {
                 Optional<Publication> optionalPublication = publicationService.findPublicationById(publicationId);
-                if (optionalPublication.isPresent()) {  //fixme orElse
+                if (optionalPublication.isPresent()) {
                     request.setAttribute(PUBLICATION, optionalPublication.get());
                     path = WebPagePath.PUBLICATION;
                 } else {
-                    path = WebPagePath.ERROR404;
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    path = WebPagePath.ERROR;
                 }
             } catch (ServiceException exception) {
                 logger.log(Level.ERROR, exception.getMessage());
-                path = WebPagePath.ERROR404;
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                request.setAttribute(ErrorPageAttribute.EXCEPTION, exception);
+                path = WebPagePath.ERROR;
             }
         } catch (NumberFormatException exception) {
             logger.log(Level.ERROR, exception.getMessage());
-            path = WebPagePath.ERROR404;
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            path = WebPagePath.ERROR;
         }
         return path;
     }

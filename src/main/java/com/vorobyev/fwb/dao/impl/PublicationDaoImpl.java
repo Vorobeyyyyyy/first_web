@@ -19,10 +19,9 @@ public class PublicationDaoImpl implements PublicationDao {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     private static final PublicationDaoImpl INSTANCE = new PublicationDaoImpl();
-
     private static final String PUBLICATIONS = "SELECT publicationId, title, summary, content, preview_img_path, publisher, date FROM publications LIMIT ? OFFSET ?";
-
     private static final String PUBLICATION_BY_ID = "SELECT publicationId, title, summary, content, preview_img_path, publisher, date FROM publications WHERE publicationId=?";
+    private static final String ADD_PUBLICATION = "INSERT INTO publications (title, preview_img_path, summary, content, date, publisher) VALUES (?, ?, ?, ?, ?, ?)";
 
     public static PublicationDaoImpl getInstance() {
         return INSTANCE;
@@ -73,5 +72,21 @@ public class PublicationDaoImpl implements PublicationDao {
                 resultSet.getString(5),
                 resultSet.getString(6),
                 calendar);
+    }
+
+    @Override
+    public void addPublication(Publication publication) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ADD_PUBLICATION)) {
+            statement.setString(1, publication.getTitle());
+            statement.setString(2, publication.getPreviewImagePath());
+            statement.setString(3, publication.getSummary());
+            statement.setString(4, publication.getContent());
+            statement.setLong(5, publication.getCalendar().getTimeInMillis());
+            statement.setString(6, publication.getPublisherNickname());
+            statement.execute();
+        } catch (SQLException | ConnectionPoolException exception) {
+            throw new DaoException(exception);
+        }
     }
 }

@@ -7,31 +7,43 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
+import java.util.Locale;
 import java.util.Optional;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 @WebServlet(name = "mainServlet", urlPatterns = {"*.do"})
-public class MainServlet extends HttpServlet {
+public class MainController extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String COMMAND = "command";
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        logger.log(Level.INFO, "New GET (Url = {})", request.getRequestURI());
+        logger.log(Level.INFO, "New GET (Url = {})", request.getRequestURL() + "?" + request.getQueryString());
         String commandId = request.getParameter(COMMAND);
         Optional<Command> commandOptional = CommandProvider.defineCommand(commandId);
 
         if (commandOptional.isEmpty()) {
             logger.log(Level.ERROR, "wrong command ({})", commandId);
-            response.sendRedirect(request.getContextPath());
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            request.getRequestDispatcher(WebPagePath.ERROR).forward(request, response);
             return;
         }
 
         Command command = commandOptional.get();
         String page = command.preform(request, response);
-        request.getRequestDispatcher(page).forward(request, response);
+
+        if (page.isEmpty()) {
+            return;
+        }
+
+        if (!page.contains(request.getContextPath())) {
+            request.getRequestDispatcher(page).forward(request, response);
+        } else {
+            logger.log(Level.INFO, "Redirected to {}", page);
+            response.sendRedirect(page);
+        }
     }
 
     @Override

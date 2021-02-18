@@ -76,7 +76,7 @@ public class ConnectionPool {
             }
         }
         logger.log(Level.INFO, "Connection has been given");
-        givenConnectionPerPeriod++;
+        givenConnectionPerPeriod++; //todo: atomic
         return connection;
     }
 

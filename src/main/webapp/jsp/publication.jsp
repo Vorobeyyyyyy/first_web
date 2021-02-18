@@ -16,6 +16,7 @@
 </head>
 
 <body>
+<%@ include file="header.jsp"%>
     <div class="main_holder">
         <div class="news section">
             <div class="news_header">

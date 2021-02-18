@@ -1,6 +1,7 @@
 package com.vorobyev.fwb.command.impl;
 
 import com.vorobyev.fwb.command.Command;
+import com.vorobyev.fwb.controller.ErrorPageAttribute;
 import com.vorobyev.fwb.controller.WebPagePath;
 import com.vorobyev.fwb.dao.PublicationDao;
 import com.vorobyev.fwb.dao.impl.PublicationDaoImpl;
@@ -18,12 +19,9 @@ import java.util.List;
 
 public class GoToMainCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-
     private static final PublicationService publicationService = PublicationServiceImpl.INSTANCE;
-
     private static final String PAGE_INDEX = "page_index";
     private static final String NEWS = "news";
-
     private static final int PUBLICATION_PER_PAGE = 10;
 
     @Override
@@ -42,7 +40,9 @@ public class GoToMainCommand implements Command {
             path = WebPagePath.MAIN;
         } catch (ServiceException exception) {
             logger.log(Level.ERROR, exception.getMessage());
-            path = WebPagePath.ERROR500;
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            request.setAttribute(ErrorPageAttribute.EXCEPTION, exception);
+            path = WebPagePath.ERROR;
         }
         return path;
     }

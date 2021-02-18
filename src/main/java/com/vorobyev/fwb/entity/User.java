@@ -8,8 +8,20 @@ public class User implements Serializable {
     private String secondName;
     private String phoneNumber;
     private String email;
+    private String avatarPath;
+    private UserAccessLevel level;
 
     public User() {
+    }
+
+    public User(String login, String firstName, String secondName, String phoneNumber, String email, String avatarPath, UserAccessLevel level) {
+        this.login = login;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.avatarPath = avatarPath;
+        this.level = level;
     }
 
     public User(String login, String firstName, String secondName, String phoneNumber, String email) {
@@ -58,6 +70,22 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
+
+    public UserAccessLevel getLevel() {
+        return level;
+    }
+
+    public void setLevel(UserAccessLevel level) {
+        this.level = level;
     }
 
     @Override

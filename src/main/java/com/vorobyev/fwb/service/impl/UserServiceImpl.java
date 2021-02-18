@@ -3,6 +3,7 @@ package com.vorobyev.fwb.service.impl;
 import com.vorobyev.fwb.dao.UserDao;
 import com.vorobyev.fwb.dao.impl.UserDaoImpl;
 import com.vorobyev.fwb.entity.User;
+import com.vorobyev.fwb.entity.UserAccessLevel;
 import com.vorobyev.fwb.exception.DaoException;
 import com.vorobyev.fwb.exception.ServiceException;
 import com.vorobyev.fwb.service.UserService;
@@ -95,5 +96,19 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(exception);
         }
         return user;
+    }
+
+    @Override
+    public void changeAvatar(User user, String username, String newAvatarPath) throws ServiceException {
+        try {
+            userDao.changeAvatar(username, newAvatarPath.replace('\\', '/'));
+        } catch (DaoException exception) {
+            throw new ServiceException(exception);
+        }
+    }
+
+    @Override
+    public boolean haveRightsToChangeProfile(User user, String username) {
+        return user.getLogin().equals(username) || user.getLevel().equals(UserAccessLevel.ADMIN);
     }
 }

@@ -7,9 +7,10 @@
 <html>
 <head>
     <title><fmt:message key="login.title"/></title>
+    <link href="${pageContext.request.contextPath}/css/common_style.css" rel="stylesheet">
 </head>
 <body>
-<jsp:include page="head.jsp"/>
+<%@ include file="header.jsp"%>
 ${error_message}
 <form action="login.do" method="post" class="login-form">
     <input type="hidden" name="command" value="login">

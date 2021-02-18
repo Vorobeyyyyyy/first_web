@@ -16,7 +16,9 @@ public enum CommandProvider implements Command {
     GO_TO_PROFILE(new GoToProfileCommand()),
     SET_LOCALE(new LocaleCommand()),
     GO_TO_MAIN(new GoToMainCommand()),
-    GO_TO_PUBLICATION(new GoToPublicationCommand());
+    GO_TO_PUBLICATION(new GoToPublicationCommand()),
+    TAKE_FILE(new TakeFile()),
+    CHANGE_AVATAR(ChangeAvatarImage.INSTANCE);
 
     Command command;
 

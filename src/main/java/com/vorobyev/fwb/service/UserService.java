@@ -7,4 +7,8 @@ public interface UserService  {
     User register(String login, String password, String firstName, String secondName, String phoneNumber, String email) throws ServiceException;
 
     User login(String login, String password) throws ServiceException;
+
+    boolean haveRightsToChangeProfile(User user, String username);
+
+    void changeAvatar(User user, String userName, String newAvatarPath) throws ServiceException;
 }

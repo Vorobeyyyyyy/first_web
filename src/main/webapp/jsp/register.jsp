@@ -7,9 +7,10 @@
 <html>
 <head>
     <title><fmt:message key="register.title"/></title>
+    <link href="${pageContext.request.contextPath}/css/common_style.css" rel="stylesheet">
 </head>
 <body>
-<jsp:include page="head.jsp"/>
+<%@ include file="header.jsp"%>
 <h1>
     <fmt:message key="register.title"/>
 </h1>

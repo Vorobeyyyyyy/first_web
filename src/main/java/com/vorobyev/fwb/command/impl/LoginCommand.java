@@ -21,7 +21,6 @@ public class LoginCommand implements Command {
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
     private static final String ERROR_MESSAGE = "error_message";
-
     private final UserServiceImpl userService = UserServiceImpl.getInstance();
 
     @Override

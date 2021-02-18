@@ -10,4 +10,6 @@ public interface PublicationDao {
     List<Publication> findPublications(int startIndex, int count) throws DaoException;
 
     Optional<Publication> findPublicationById(long id) throws DaoException;
+
+    void addPublication(Publication publication) throws DaoException;
 }

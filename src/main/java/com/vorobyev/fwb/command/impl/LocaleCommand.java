@@ -1,6 +1,7 @@
 package com.vorobyev.fwb.command.impl;
 
 import com.vorobyev.fwb.command.Command;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +22,6 @@ public class LocaleCommand implements Command {
         String locale = request.getParameter(LANGUAGE);
         String prevPage = request.getParameter(PREV_PAGE);
         session.setAttribute(LOCALE_ATTRIBUTE, locale);
-        prevPage = prevPage.substring(request.getContextPath().length());
         return prevPage;
     }
 }

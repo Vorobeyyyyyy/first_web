@@ -2,13 +2,16 @@ package com.vorobyev.fwb.dao.impl;
 
 import com.vorobyev.fwb.dao.UserDao;
 import com.vorobyev.fwb.entity.User;
+import com.vorobyev.fwb.entity.UserAccessLevel;
 import com.vorobyev.fwb.exception.ConnectionPoolException;
 import com.vorobyev.fwb.exception.DaoException;
 import com.vorobyev.fwb.pool.ConnectionPool;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.Locale;
 import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
@@ -20,7 +23,8 @@ public class UserDaoImpl implements UserDao {
 
     private final static String LOGIN_EXISTS = "SELECT COUNT(id) FROM users WHERE login=?";
     private final static String ADD_USER = "INSERT INTO users (login, password, first_name, second_name, phone_number, email) VALUES (?, ?, ?, ?, ?, ?)";
-    private final static String USER_BY_LOGIN_AND_PASSWORD = "SELECT login, first_name, second_name, phone_number, email FROM users WHERE login=? AND password=?";
+    private final static String USER_BY_LOGIN_AND_PASSWORD = "SELECT login, first_name, second_name, phone_number, email, avatar_image_path, user_level FROM users WHERE login=? AND password=?";
+    private final static String CHANGE_AVATAR = "UPDATE users SET avatar_image_path = ? WHERE login = ?";
 
     private UserDaoImpl() {
     }
@@ -78,12 +82,26 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public void changeAvatar(String username, String newImagePath) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(CHANGE_AVATAR)) {
+            statement.setString(1, newImagePath);
+            statement.setString(2, username);
+            statement.execute();
+        } catch (SQLException | ConnectionPoolException exception) {
+            throw new DaoException(exception);
+        }
+    }
+
     private User userFromResultSet(ResultSet resultSet) throws SQLException {
         return new User(
                 resultSet.getString(1),
                 resultSet.getString(2),
                 resultSet.getString(3),
                 resultSet.getString(4),
-                resultSet.getString(5));
+                resultSet.getString(5),
+                resultSet.getString(6),
+                UserAccessLevel.valueOf(resultSet.getString(7)));
     }
 }
