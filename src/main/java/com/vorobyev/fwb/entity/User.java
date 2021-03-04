@@ -3,10 +3,10 @@ package com.vorobyev.fwb.entity;
 import java.io.Serializable;
 
 public class User implements Serializable {
+    private static final String DEFAULT_AVATAR_PATH = "empty.png";
     private String login;
     private String firstName;
     private String secondName;
-    private String phoneNumber;
     private String email;
     private String avatarPath;
     private UserAccessLevel level;
@@ -14,22 +14,22 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String login, String firstName, String secondName, String phoneNumber, String email, String avatarPath, UserAccessLevel level) {
+    public User(String login, String firstName, String secondName, String email, String avatarPath, UserAccessLevel level) {
         this.login = login;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.phoneNumber = phoneNumber;
         this.email = email;
         this.avatarPath = avatarPath;
         this.level = level;
     }
 
-    public User(String login, String firstName, String secondName, String phoneNumber, String email) {
+    public User(String login, String firstName, String secondName, String email) {
         this.login = login;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.phoneNumber = phoneNumber;
         this.email = email;
+        this.level = UserAccessLevel.USER;
+        this.avatarPath = DEFAULT_AVATAR_PATH;
     }
 
     public String getLogin() {
@@ -54,14 +54,6 @@ public class User implements Serializable {
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -98,7 +90,6 @@ public class User implements Serializable {
         if (login != null ? !login.equals(user.login) : user.login != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (secondName != null ? !secondName.equals(user.secondName) : user.secondName != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
         return email != null ? email.equals(user.email) : user.email == null;
     }
 
@@ -107,7 +98,6 @@ public class User implements Serializable {
         int result = login != null ? login.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (secondName != null ? secondName.hashCode() : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
@@ -118,7 +108,6 @@ public class User implements Serializable {
         sb.append("login='").append(login).append('\'');
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", secondName='").append(secondName).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append('}');
         return sb.toString();

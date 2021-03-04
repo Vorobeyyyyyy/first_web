@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+@Deprecated(forRemoval = true) //Replaced with ShowPublicationsCommand
 public class GoToMainCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final PublicationService publicationService = PublicationServiceImpl.INSTANCE;

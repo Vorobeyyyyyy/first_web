@@ -10,26 +10,26 @@ import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
-
+    //Pool size range
     private static final int MAX_POOL_SIZE = 32;
     private static final int MIN_POOL_SIZE = 8;
-
+    //Initializer parameters
     private static final int MAX_RETRY_COUNT = 5;
-
+    //Auto-cleaner parameters
     private static final int CLEAR_CONNECTIONS_REQUESTS_COUNT = 100;
-
     private static final int CLEAR_PERIOD_IN_SECONDS = 60;
     private static final int CLEAR_DELIMITER = 2;
-
+    //Singleton
     private static final ConnectionPool INSTANCE = new ConnectionPool();
 
     private final BlockingQueue<ProxyConnection> freeConnections = new LinkedBlockingQueue<>(MAX_POOL_SIZE);
     private final Queue<ProxyConnection> givenConnections = new ArrayDeque<>(MAX_POOL_SIZE);
-
-    private int givenConnectionPerPeriod = 0;
+    private final AtomicInteger givenConnectionPerPeriod = new AtomicInteger(0);
+    private final AtomicInteger totalConnectionsCount = new AtomicInteger(0);
 
     public static ConnectionPool getInstance() {
         return INSTANCE;
@@ -42,11 +42,11 @@ public class ConnectionPool {
             try {
                 ProxyConnection proxyConnection = new ProxyConnection(ConnectionCreator.createConnection());
                 freeConnections.add(proxyConnection);
+                totalConnectionsCount.incrementAndGet();
                 initializedCounter++;
             } catch (SQLException exception) {
                 retryCounter++;
             }
-
             if (retryCounter >= MAX_RETRY_COUNT) {
                 logger.log(Level.FATAL, "Cant create {} connections after {} attempts", MIN_POOL_SIZE, retryCounter);
                 throw new RuntimeException("Cant initialize connection pool");
@@ -58,25 +58,27 @@ public class ConnectionPool {
 
     public Connection getConnection() throws ConnectionPoolException {
         ProxyConnection connection;
-        if (freeConnections.isEmpty() && freeConnections.size() + givenConnections.size() < MAX_POOL_SIZE) { //todo: mb synchronized?
-            try {
-                ProxyConnection newProxyConnection = new ProxyConnection(ConnectionCreator.createConnection());
-                givenConnections.offer(newProxyConnection);
-                connection = newProxyConnection;
-                logger.log(Level.INFO, "Connection pool extended, current size: {}", findTotalConnectionsCount());
-            } catch (SQLException exception) {
-                throw new ConnectionPoolException(exception);
-            }
-        } else {
+        if (!freeConnections.isEmpty() || totalConnectionsCount.get() >= MAX_POOL_SIZE) {
             try {
                 connection = freeConnections.take();
                 givenConnections.offer(connection);
             } catch (InterruptedException exception) {
-                throw new ConnectionPoolException(exception); //todo change to thread.interrupt
+                Thread.currentThread().interrupt();
+                throw new ConnectionPoolException(exception);
+            }
+        } else {
+            try {
+                ProxyConnection newProxyConnection = new ProxyConnection(ConnectionCreator.createConnection());
+                givenConnections.offer(newProxyConnection);
+                totalConnectionsCount.incrementAndGet();
+                connection = newProxyConnection;
+                logger.log(Level.INFO, "Connection pool extended, current size: {}", totalConnectionsCount.get());
+            } catch (SQLException exception) {
+                throw new ConnectionPoolException(exception);
             }
         }
         logger.log(Level.INFO, "Connection has been given");
-        givenConnectionPerPeriod++; //todo: atomic
+        givenConnectionPerPeriod.incrementAndGet();
         return connection;
     }
 
@@ -91,23 +93,20 @@ public class ConnectionPool {
 
     void removeUnnecessaryConnections() {
         int removedConnections = 0;
-        if (givenConnectionPerPeriod < CLEAR_CONNECTIONS_REQUESTS_COUNT) {
-            int connectionsToRemoveCount = (findTotalConnectionsCount() - MIN_POOL_SIZE) / CLEAR_DELIMITER;
+        if (givenConnectionPerPeriod.get() < CLEAR_CONNECTIONS_REQUESTS_COUNT) {
+            int connectionsToRemoveCount = (totalConnectionsCount.get() - MIN_POOL_SIZE) / CLEAR_DELIMITER;
             while (connectionsToRemoveCount-- != 0 && !freeConnections.isEmpty()) {
                 try {
                     ProxyConnection proxyConnection = freeConnections.take();
                     proxyConnection.reallyClose();
+                    totalConnectionsCount.decrementAndGet();
                     removedConnections++;
                 } catch (InterruptedException | SQLException exception) {
                     logger.log(Level.ERROR, exception.getMessage());
                 }
             }
         }
-        givenConnectionPerPeriod = 0;
+        givenConnectionPerPeriod.set(0);
         logger.log(Level.INFO, "Removed {} connections", removedConnections);
-    }
-
-    private int findTotalConnectionsCount() {
-        return freeConnections.size() + givenConnections.size();
     }
 }

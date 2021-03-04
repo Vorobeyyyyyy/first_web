@@ -21,9 +21,10 @@ public class UserDaoImpl implements UserDao {
 
     private final static UserDaoImpl instance = new UserDaoImpl();
 
-    private final static String LOGIN_EXISTS = "SELECT COUNT(id) FROM users WHERE login=?";
-    private final static String ADD_USER = "INSERT INTO users (login, password, first_name, second_name, phone_number, email) VALUES (?, ?, ?, ?, ?, ?)";
-    private final static String USER_BY_LOGIN_AND_PASSWORD = "SELECT login, first_name, second_name, phone_number, email, avatar_image_path, user_level FROM users WHERE login=? AND password=?";
+    private final static String LOGIN_EXISTS = "SELECT COUNT(login) FROM users WHERE login=?";
+    private final static String ADD_USER = "INSERT INTO users (login, password, first_name, second_name, email, user_level, avatar_image_path) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private final static String USER_BY_LOGIN_AND_PASSWORD = "SELECT login, first_name, second_name, email, avatar_image_path, user_level FROM users WHERE login=? AND password=?";
+    private final static String USER_BY_LOGIN = "SELECT login, first_name, second_name, email, avatar_image_path, user_level FROM users WHERE login=?";
     private final static String CHANGE_AVATAR = "UPDATE users SET avatar_image_path = ? WHERE login = ?";
 
     private UserDaoImpl() {
@@ -74,8 +75,9 @@ public class UserDaoImpl implements UserDao {
             statement.setString(2, password);
             statement.setString(3, user.getFirstName());
             statement.setString(4, user.getSecondName());
-            statement.setString(5, user.getPhoneNumber());
-            statement.setString(6, user.getEmail());
+            statement.setString(5, user.getEmail());
+            statement.setString(6, user.getLevel().toString());
+            statement.setString(7, user.getAvatarPath());
             statement.execute();
         } catch (SQLException | ConnectionPoolException exception) {
             throw new DaoException(exception);
@@ -94,6 +96,24 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public Optional<User> findByLogin(String login) throws DaoException {
+        Optional<User> optionalUser;
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(USER_BY_LOGIN)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                optionalUser = Optional.of(userFromResultSet(resultSet));
+            } else {
+                optionalUser = Optional.empty();
+            }
+        } catch (SQLException | ConnectionPoolException exception) {
+            throw new DaoException(exception);
+        }
+        return optionalUser;
+    }
+
     private User userFromResultSet(ResultSet resultSet) throws SQLException {
         return new User(
                 resultSet.getString(1),
@@ -101,7 +121,6 @@ public class UserDaoImpl implements UserDao {
                 resultSet.getString(3),
                 resultSet.getString(4),
                 resultSet.getString(5),
-                resultSet.getString(6),
-                UserAccessLevel.valueOf(resultSet.getString(7)));
+                UserAccessLevel.valueOf(resultSet.getString(6)));
     }
 }

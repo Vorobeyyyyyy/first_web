@@ -15,10 +15,17 @@ public enum CommandProvider implements Command {
     LOGOUT(new LogoutCommand()),
     GO_TO_PROFILE(new GoToProfileCommand()),
     SET_LOCALE(new LocaleCommand()),
-    GO_TO_MAIN(new GoToMainCommand()),
     GO_TO_PUBLICATION(new GoToPublicationCommand()),
-    TAKE_FILE(new TakeFile()),
-    CHANGE_AVATAR(ChangeAvatarImage.INSTANCE);
+    TAKE_FILE(new TakeFileCommand()),
+    CHANGE_AVATAR(ChangeAvatarImage.INSTANCE),
+    CREATE_PUBLICATION(CreatePublicationCommand.INSTANCE),
+    ADD_COMMEND(AddCommendCommand.INSTANCE),
+    LIKE(LikeCommand.INSTANCE),
+    UNLIKE(UnlikeCommand.INSTANCE),
+    SHOW_PROFILE(ShowProfileCommand.INSTANCE),
+    GO_CREATE_PUBLICATION(GoCreatePublicationCommand.INSTANCE),
+    GO_EDIT_PUBLICATION(GoEditPublicationCommand.INSTANCE),
+    SHOW_PUBLICATIONS(ShowPublicationsCommand.INSTANCE);
 
     Command command;
 

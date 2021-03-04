@@ -3,35 +3,50 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
+<%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
 
 <html>
+
 <head>
-    <title><fmt:message key="login.title"/></title>
+    <title>
+        <fmt:message key="login.title" />
+    </title>
     <link href="${pageContext.request.contextPath}/css/common_style.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login_register.css">
+    <script src="https://kit.fontawesome.com/f5dea48adc.js" crossorigin="anonymous"></script>
+    <script src="${pageContext.request.contextPath}/js/form_validation.js"></script>
 </head>
+
 <body>
 <%@ include file="header.jsp"%>
-${error_message}
-<form action="login.do" method="post" class="login-form">
-    <input type="hidden" name="command" value="login">
-    <div class="mb-3">
-        <label for="login-field" class="form-label"><fmt:message key="login.login"/></label>
-        <input type="text" name="login" class="form-control" id="login-field" pattern="[A-Za-z0-9]{4,16}"
-               title="<fmt:message key="login.login_hint"/>" required="required">
+<div class="main_holder">
+    <div class="section">
+        <div class="form_holder">
+            <form action="${pageContext.request.contextPath}/login.do">
+                <input type="hidden" name="command" value="login">
+                <div class="main_title input_holder first">
+                    <fmt:message key="login.title"/>
+                </div>
+                <div class="input_holder hoverable with_icon">
+                    <i class="fas fa-user"></i>
+                    <div class="input_label"><fmt:message key="login.login"/></div>
+                    <input type="text" placeholder="Alex" name="login" invalidmessage="<fmt:message key="login.login_hint"/>" pattern=".{3,16}" required>
+                </div>
+                <div class="input_holder hoverable with_icon">
+                    <i class="fas fa-key"></i>
+                    <div class="input_label"><fmt:message key="login.password"/></div>
+                    <input type="password" placeholder="password1234" name="password" invalidmessage="<fmt:message key="login.password_hint"/>" pattern=".{8,20}" required>
+                </div>
+                <button type="submit" class="input_holder hoverable last with_icon form_submit">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <div><fmt:message key="login.submit"/></div>
+                </button>
+                <a href="${pageContext.request.contextPath}${WebPagePathPrepared.REGISTER}" class="secondary_link"><fmt:message key="login.go_register"/></a>
+            </form>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="password-field" class="form-label"><fmt:message key="login.password"/></label>
-        <input type="password" name="password" class="form-control" id="password-field" pattern=".{8,32}"
-               title="<fmt:message key="login.password_hint"/>" required="required">
-    </div>
-    <div class="mb-3">
-        <button type="submit" class="btn btn-primary login-submit-button"><fmt:message key="login.submit"/></button>
-    </div>
-</form>
-<form action="register.do" method="get">
-    <input type="hidden" name="command" value="go_to_register">
-    <input type="submit" value="Sing up">
-</form>
+</div>
 <script src="${pageContext.request.contextPath}/js/login.js"></script>
 </body>
+
 </html>

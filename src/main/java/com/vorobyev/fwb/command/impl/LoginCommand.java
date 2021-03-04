@@ -2,6 +2,7 @@ package com.vorobyev.fwb.command.impl;
 
 import com.vorobyev.fwb.command.Command;
 import com.vorobyev.fwb.command.CommandProvider;
+import com.vorobyev.fwb.controller.WebPagePathPrepared;
 import com.vorobyev.fwb.entity.User;
 import com.vorobyev.fwb.exception.ServiceException;
 import com.vorobyev.fwb.service.impl.UserServiceImpl;
@@ -35,7 +36,7 @@ public class LoginCommand implements Command {
                 User user = userService.login(login, password);
                 session.setAttribute(SessionAttributeName.IS_LOGIN, true);
                 session.setAttribute(SessionAttributeName.USER, user);
-                resultPage = WebPagePath.PROFILE;
+                resultPage = request.getContextPath() + String.format(WebPagePathPrepared.SHOW_PROFILE, login);
             } catch (ServiceException exception) {
                 logger.log(Level.ERROR, exception.getMessage());
                 request.setAttribute(ERROR_MESSAGE, exception.getMessage());

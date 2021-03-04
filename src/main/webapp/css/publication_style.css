@@ -3,36 +3,75 @@
     --background_color:  rgb(219, 219, 219);
 }
 
+body {
+    font-family: var(--font);
+}
+
 .news {
     width: 900px;
     flex-direction: column;
 }
 
-.main_image {
-    margin: 10px;
-    width: 350px;
-}
-
 .news_header {
     display: flex;
     flex-direction: row;
+    height: 282.5px;
+}
+
+.image_holder {
+    margin: 10px;
+    width: 350px;
+    object-fit: contain;
+}
+
+.main_image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: 0 0;
+    cursor: pointer;
 }
 
 .news_header_text {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 530px;
 }
 
 .news_topic {
     margin: 5px;
     padding: 5px;
-    margin-top: 5px;
     border-radius: 5px;
     font-size: 30px;
     font-family: var(--font);
     font-weight: 650;
     line-height: 35px;
+    height: 100%;
+    width: auto;
+}
+
+.body_holder {
+    display: flex;
+    flex-direction: column;
+}
+
+.body_holder + .body_holder {
+    margin-top: 10px;
+}
+
+.centred {
+    align-self: center;
+}
+
+.body_video {
+    border: 0;
+}
+
+.body_image {
+    align-self: center;
+    max-height: 300px;
+    width: auto;
 }
 
 .bottom_line {
@@ -51,18 +90,13 @@
 
 .news_body {
     font-family: var(--font);
-    margin: 5px;
-    margin-top: 20px;
+    margin: 20px 5px 5px;
     padding: 5px;
     text-align: justify;
     display: flex;
     flex-direction: column;
 }
 
-.news_body img {
-    margin: 20px;
-    align-self: center;
-}
 
 .next_prev {
     width: 900px;
@@ -111,6 +145,15 @@
     background-color: var(--background_color)
 }
 
+.no_commends {
+    font-size: 20px;
+    padding: 10px;
+    width: 90%;
+    text-align: center;
+    margin: 5px auto 10px;
+    background-color: var(--background_color);
+}
+
 .commend_title {
     display: flex;
     flex-direction: row;
@@ -151,4 +194,47 @@
     font-family: var(--font);
     font-weight: bold;
     border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.like_button.liked {
+    background-color: var(--header_color);
+    color: white;
+}
+
+.post_commend {
+    width: 900px;
+}
+
+.post_commend_form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 5px;
+    border: none;
+}
+
+.commend_body {
+    height: 200px;
+    resize: none;
+    width: auto;
+    border: inherit;
+    text-align: justify;
+    font-size: 15px;
+}
+
+.submit_commend {
+    margin-top: 5px;
+    height: 30px;
+    font-size: 18px;
+    border: inherit;
+    background-color: var(--header_color);
+    color: white;
+}
+
+.submit_commend:hover {
+    background-color: var(--header_sub_color);
+    cursor: pointer;
 }

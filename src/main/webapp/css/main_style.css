@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(230, 218, 202);
+    background-color: var(--background_color);
 }
 
 .news_placeholder {
@@ -13,14 +13,7 @@ body {
     flex-direction: row;
     width: 900px;
     height: 210px;
-    border-radius: 5px 10px 10px 10px;
-    background-color: rgb(139, 139, 139);
-    margin: 20px;
-    transition: 1s;
-}
-
-.news_element:hover {
-    background-color: rgb(187, 187, 187);
+    margin-top: 10px;
     transition: 1s;
 }
 
@@ -28,7 +21,8 @@ body {
     margin-top: 5px;
     margin-left: 5px;
     height: 200px;
-    border-radius: 5px 10px 10px 10px;
+    width: 270px;
+    object-fit: contain;
 }
 
 .news_topic {
@@ -38,12 +32,6 @@ body {
     font-family: cursive;
     font-size: 30px;
     line-height: 90%;
-    transition: 0.3s;
-}
-
-.news_topic:hover {
-    color: rgb(0, 38, 163);
-    cursor: pointer;
     transition: 0.3s;
 }
 

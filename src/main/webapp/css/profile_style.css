@@ -98,12 +98,14 @@
     font-weight: bolder;
 }
 
-.subscibes {
-    flex-direction: column;
-}
 
 .publisher_name {
     font-size: 20px;
+}
+
+.publications_button {
+    height: 40px;
+    background-color: var(--header_color);
 }
 
 .subsribe {

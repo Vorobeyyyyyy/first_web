@@ -30,68 +30,23 @@ public enum ChangeAvatarImage implements Command {
     INSTANCE;
 
     private static final Logger logger = LogManager.getLogger();
-    private final FileService fileService = FileServiceImpl.INSTANCE;
-    private final UserService userService = UserServiceImpl.getInstance();
-    private final static int CORRECT_FILES_COUNT = 1;
-    private final static String USERNAME = "username";
-    private final static String AVATAR_FOLDER_PATH = "avatars";
-    private final static char EXTENSION_DELIMITER = '.';
-    private final static ServletFileUpload servletFileUpload = new ServletFileUpload(new DiskFileItemFactory());
+    private static final String AVATAR_PATH = "avatar_path";
+    private static final UserService userService = UserServiceImpl.getInstance();
 
     @Override
     public String preform(HttpServletRequest request, HttpServletResponse response) {
-        List<FileItem> fields;
+        String path;
+        String newPath = request.getParameter(AVATAR_PATH);
+        User user = (User) request.getSession().getAttribute(SessionAttributeName.USER);
         try {
-            fields = servletFileUpload.parseRequest(request);
-        } catch (FileUploadException exception) {
-            request.setAttribute(ErrorPageAttribute.EXCEPTION, exception);
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return WebPagePath.ERROR;
-        }
-
-        HttpSession session = request.getSession();
-        boolean isLogin = (boolean) session.getAttribute(SessionAttributeName.IS_LOGIN);
-        Optional<String> optionalUsername = MultipartParser.getParameter(fields, USERNAME);
-        String username;
-
-        if (!isLogin) {
-            logger.log(Level.INFO, "Not logged in");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return WebPagePath.ERROR;
-        }
-
-        if (optionalUsername.isPresent()) {
-            username = optionalUsername.get();
-        } else {
-            logger.log(Level.INFO, "Username not defined");
-            response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-            return WebPagePath.ERROR;
-        }
-
-        User user = (User) session.getAttribute(SessionAttributeName.USER);
-        if (!userService.haveRightsToChangeProfile(user, username)) {
-            logger.log(Level.INFO, "Not enough rights");
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return WebPagePath.ERROR;
-        }
-
-        try {
-            List<FileItem> fileItems = MultipartParser.takeFiles(fields);
-            if (fileItems.size() != CORRECT_FILES_COUNT) {
-                logger.log(Level.WARN, "Wrong files count {}", fileItems.size());
-                response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-                return WebPagePath.ERROR;
-            }
-            FileItem newAvatar = fileItems.get(0);
-            String newAvatarFileName = username + newAvatar.getName().substring(newAvatar.getName().lastIndexOf(EXTENSION_DELIMITER));
-            String newAvatarPath = AVATAR_FOLDER_PATH + File.separator + newAvatarFileName;
-            fileService.writeFile(newAvatar, newAvatarPath);
-            userService.changeAvatar(user, username, newAvatarPath);
+            userService.changeAvatar(user.getLogin(), newPath);
+            user.setAvatarPath(newPath);
+            path = WebPagePath.PROFILE;
         } catch (ServiceException exception) {
             logger.log(Level.ERROR, exception);
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            request.setAttribute(ErrorPageAttribute.EXCEPTION, exception);
+            path = WebPagePath.ERROR;
         }
-        return WebPagePath.PROFILE;
+        return path;
     }
 }

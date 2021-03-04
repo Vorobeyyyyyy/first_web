@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class TakeFile implements Command {
+public class TakeFileCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String FILE_NAME = "file_name";

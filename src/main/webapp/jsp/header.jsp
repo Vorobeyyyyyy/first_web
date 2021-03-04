@@ -4,11 +4,12 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
 <c:set var="currentUrl" value="${requestScope['javax.servlet.forward.request_uri']}?${pageContext.request.queryString}"/>
+<%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
 <script src="https://kit.fontawesome.com/f5dea48adc.js" crossorigin="anonymous"></script>
 
 <header>
     <div class="header_content_holder">
-        <a class="header_reference project_name" href="${pageContext.request.contextPath}/main.do?command=go_to_main">4DPA</a>
+        <a class="header_reference project_name" href="${pageContext.request.contextPath}${WebPagePathPrepared.MAIN}">4DPA</a>
         <a class="header_reference header_part hoverable" href="#"><fmt:message key="header.engineering"/></a>
         <a class="header_reference header_part hoverable" href="#"><fmt:message key="header.games"/></a>
         <a class="header_reference header_part hoverable" href="#"><fmt:message key="header.reviews"/></a>
@@ -22,9 +23,9 @@
         </c:when>
         <c:otherwise>
         <div class="header_part dropdown hoverable with_icon">
-            <i class="fas fa-user-circle"></i>MrSkilk
+            <i class="fas fa-user-circle"></i>${user.login}
             <div class="dropdown_content">
-                <a href="${pageContext.request.contextPath}/profile.do?command=go_to_profile" class="dropdown_content_item"><fmt:message key="header.profile"/></a>
+                <a href="${pageContext.request.contextPath}${WebPagePathPrepared.SHOW_PROFILE.formatted(user.login)}" class="dropdown_content_item"><fmt:message key="header.profile"/></a>
                 <div class="dropdown_delimiter"></div>
                 <a href="${pageContext.request.contextPath}/logout.do?command=logout" class="dropdown_content_item"><fmt:message key="header.logout"/></a>
             </div>

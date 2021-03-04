@@ -8,7 +8,7 @@ public interface UserService  {
 
     User login(String login, String password) throws ServiceException;
 
-    boolean haveRightsToChangeProfile(User user, String username);
+    void changeAvatar(String userName, String newAvatarPath) throws ServiceException;
 
-    void changeAvatar(User user, String userName, String newAvatarPath) throws ServiceException;
+    User userByLogin(String login) throws ServiceException;
 }

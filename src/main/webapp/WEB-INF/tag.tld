@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<tag>
+    <name>reference</name>
+    <tag-class>
+        com.vorobyev.fwb.util.tag.ReferenceTag
+    </tag-class>
+    <attribute>
+        <name>path</name>
+        <required>true</required>
+    </attribute>
+</tag>

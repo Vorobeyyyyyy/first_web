@@ -13,4 +13,6 @@ public interface UserDao {
     void register(User user, String password) throws DaoException;
 
     void changeAvatar(String username, String newImagePath) throws DaoException;
+
+    Optional<User> findByLogin(String login) throws DaoException;
 }

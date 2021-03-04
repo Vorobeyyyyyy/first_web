@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
         return instance;
     }
 
+    @Override
     public User register(String login, String password, String firstName, String secondName, String phoneNumber, String email) throws ServiceException {
         User user;
         Optional<String> optionalPassword = PasswordCoder.code(password);
@@ -37,34 +38,25 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Password coder error - NO SUCH ALGORITHM");
         }
         password = optionalPassword.get();
-
         if (!UserValidator.isLoginValid(login)) {
             throw new ServiceException("Login " + login + " is invalid");
         }
-
         if (!UserValidator.isPasswordValid(password)) {
             throw new ServiceException("Password is invalid");
         }
-
-        if (!UserValidator.isFirstNameValid(firstName)) {
+        if (!UserValidator.isNameValid(firstName)) {
             throw new ServiceException("First name " + firstName + " is invalid");
         }
-
-        if (!UserValidator.isSecondNameValid(secondName)) {
+        if (!UserValidator.isNameValid(secondName)) {
             throw new ServiceException("Second name " + secondName + " is invalid");
         }
-
-        if (!UserValidator.isPhoneValid(phoneNumber)) {
-            throw new ServiceException("Phone number " + phoneNumber + " is invalid");
-        }
-
         if (!UserValidator.isEmailValid(email)) {
             throw new ServiceException("Email " + email + " is invalid");
         }
 
         try {
             if (userDao.isLoginFree(login)) {
-                user = new User(login, firstName, secondName, phoneNumber, email);
+                user = new User(login, firstName, secondName, email);
                 userDao.register(user, password);
                 logger.log(Level.INFO, "New user {}", login);
             } else {
@@ -77,13 +69,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String login, String password) throws ServiceException { //fixme add validation
+    public User login(String login, String password) throws ServiceException {
         User user;
         Optional<String> optionalPassword = PasswordCoder.code(password);
         if (optionalPassword.isEmpty()) {
             throw new ServiceException("Password coder error - NO SUCH ALGORITHM");
         }
         password = optionalPassword.get();
+        if (!UserValidator.isLoginValid(login)) {
+            throw new ServiceException("Login " + login + " is invalid");
+        }
+        if (!UserValidator.isPasswordValid(password)) {
+            throw new ServiceException("Password is invalid");
+        }
 
         try {
             Optional<User> optionalUser = userDao.login(login, password);
@@ -99,16 +97,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeAvatar(User user, String username, String newAvatarPath) throws ServiceException {
+    public void changeAvatar(String username, String newAvatarPath) throws ServiceException {
+        if (!UserValidator.isLoginValid(username)) {
+            throw new ServiceException("Login " + username + " is invalid");
+        }
+
         try {
-            userDao.changeAvatar(username, newAvatarPath.replace('\\', '/'));
+            userDao.changeAvatar(username, newAvatarPath);
         } catch (DaoException exception) {
             throw new ServiceException(exception);
         }
     }
 
     @Override
-    public boolean haveRightsToChangeProfile(User user, String username) {
-        return user.getLogin().equals(username) || user.getLevel().equals(UserAccessLevel.ADMIN);
+    public User userByLogin(String login) throws ServiceException {
+        if (!UserValidator.isLoginValid(login)) {
+            throw new ServiceException("Invalid login " + login);
+        }
+        User user;
+        try {
+            Optional<User> optionalUser = userDao.findByLogin(login);
+            if (optionalUser.isPresent()) {
+                user = optionalUser.get();
+            } else {
+                throw new ServiceException("Wrong login " + login);
+            }
+        } catch (DaoException exception) {
+            throw new ServiceException("in userByLogin", exception);
+        }
+        return user;
     }
 }

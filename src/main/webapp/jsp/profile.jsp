@@ -3,7 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
-<jsp:useBean id="user" class="com.vorobyev.fwb.entity.User" scope="session"/>
+<jsp:useBean id="requestedUser" class="com.vorobyev.fwb.entity.User" scope="request"/>
+<jsp:useBean id="commends" scope="request" type="java.util.List<com.vorobyev.fwb.entity.Commend>"/>
+<jsp:useBean id="canEdit" scope="request" type="java.lang.Boolean"/>
+<jsp:useBean id="isPublisher" scope="request" type="java.lang.Boolean"/>
+<%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
 
 <html>
 
@@ -14,39 +18,38 @@
 </head>
 
 <body>
-<%@ include file="header.jsp"%>
+<%@ include file="header.jsp" %>
 <div class="main_holder">
     <div class="section profile">
-        <div id="avatar_button" class="img_with_text">
-            <img src=${pageContext.request.contextPath}/.do?command=take_file&file_name=${user.avatarPath}
-                 alt="${user.login}" class="profile_image">
+        <div id="avatar_button" class="<c:if test="${canEdit}">img_with_text</c:if>">
+            <img src="${pageContext.request.contextPath}/.do?command=take_file&file_name=${requestedUser.avatarPath}"
+                 alt="${requestedUser.login}" class="profile_image">
             <div class="text_on_cover"><fmt:message key="profile.change_avatar"/></div>
         </div>
         <div class="profile_information">
-            <div class="profile_name">${user.login}</div>
-            <div class="profile_text"><fmt:message key="profile.level"/>: <fmt:message key="user.${user.level.toString().toLowerCase()}"/></div>
-            <div class="profile_text"><fmt:message key="profile.name"/>: ${user.firstName} ${user.secondName}</div>
-            <div class="profile_text"><fmt:message key="profile.email"/>: ${user.email}</div>
-            <div class="profile_text"><fmt:message key="profile.phone"/>: ${user.phoneNumber}</div>
+            <div class="profile_name">${requestedUser.login}</div>
+            <div class="profile_text"><fmt:message key="profile.level"/>: <fmt:message
+                    key="user.${requestedUser.level.toString().toLowerCase()}"/></div>
+            <div class="profile_text"><fmt:message key="profile.name"/>: ${requestedUser.firstName} ${requestedUser.secondName}</div>
+            <div class="profile_text"><fmt:message key="profile.email"/>: ${requestedUser.email}</div>
         </div>
     </div>
+    <c:if test="${isPublisher}">
+        <div class="section">
+            <a href="${pageContext.request.contextPath}${WebPagePathPrepared.MAIN_WITH_PUBLISHER.formatted(requestedUser.login)}" class="publications_button hoverable">Прейти к публикациям</a>
+            <c:if test="${canEdit}">
+                <a href="${pageContext.request.contextPath}${WebPagePathPrepared.GO_CREATE_PUBLICATION}" class="publications_button hoverable">Создать</a>
+            </c:if>
+        </div>
+    </c:if>
     <div class="section commends">
         <div class="section_title"><fmt:message key="profile.commends"/>:</div>
-        <div class="commend">
-            <div class="commended_publ">Сооснователь OnePlus анонсировал первое устройство «Ничего»</div>
-            <div class="commend_text">Я тоже могу придумать ничего (пост не читал даже хаха)</div>
-        </div>
-        <div class="commend">
-            <div class="commended_publ">Сооснователь OnePlus анонсировал первое устройство «Ничего»</div>
-            <div class="commend_text">Я тоже могу придумать ничего (пост не читал даже хаха)</div>
-        </div>
-    </div>
-    <div class="section subscibes">
-        <div class="section_title"><fmt:message key="profile.subscribes"/>:</div>
-        <div class="subsribe animate__animated">
-            <div class="publisher_name">Cherepaha123</div>
-            <button class="unsubscribe_btn"><fmt:message key="profile.unsub"/></button>
-        </div>
+        <c:forEach var="commend" items="${commends}">
+            <div class="commend">
+                <a class="commended_publ custom_a" href="${pageContext.request.contextPath}${WebPagePathPrepared.PUBLICATION_WITH_ID.formatted(commend.publicationId)}">${commend.publicationTitle}</a>
+                <div class="commend_text">${commend.body}</div>
+            </div>
+        </c:forEach>
     </div>
 </div>
 
@@ -54,11 +57,16 @@
     <div class="modal-content">
         <span id="close_avatar_change" class="close">&times;</span>
         <form method="post"
-              action="${pageContext.request.contextPath}/change_avatar.up?command=change_avatar"
-              enctype="multipart/form-data" class="update_avatar_form">
-            <input type="hidden" name="username" value="${user.login}">
+              action="${pageContext.request.contextPath}/avatar.up"
+              enctype="multipart/form-data" class="update_avatar_form"
+              id="avatar_form">
             <input type="file" name="uploadFile">
             <input type="submit" class="submit_avatar" value="<fmt:message key="profile.submit" />">
+        </form>
+        <form method="post" action="${pageContext.request.contextPath}/avatar.do"
+              id="avatar_form2" style="display: none">
+            <input type="hidden" name="command" value="change_avatar">
+            <input type="text" name="avatar_path" id="avatar_path" value="">
         </form>
     </div>
 </div>

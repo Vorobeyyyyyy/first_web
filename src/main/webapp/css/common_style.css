@@ -1,12 +1,23 @@
 :root {
+    --font: "Open Sans Condensed", "Segoe UI", "Helvetica Neue", Helvetica, Tahoma, sans-serif;
     --background_color: rgb(219, 219, 219);
     --header_color: rgb(0, 112, 218);
     --header_sub_color: rgb(55, 158, 255);
     --contrast_color: white;
 }
 
+.custom_a {
+    text-decoration: none;
+    color: black;
+}
+
+.custom_a:hover {
+    color: var(--header_color);
+}
+
 body {
     background-color: var(--background_color);
+    font-family: var(--font);
 }
 
 .main_holder {
@@ -20,8 +31,13 @@ body {
     display: flex;
     flex-direction: row;
     background-color: var(--contrast_color);
-    width: 700px;
+    width: 900px;
     transition: 1s;
+}
+
+.centred {
+    justify-content: center;
+    align-items: center;
 }
 
 .section_title {
@@ -34,6 +50,7 @@ body {
 }
 
 header {
+    position: sticky;
     top: 0;
     height: auto;
     background-color: var(--header_color);
@@ -72,13 +89,22 @@ header {
     font-size: 20px;
 }
 
-.header_part.hoverable:hover {
+.hoverable:hover {
     background-color: var(--header_sub_color);
 }
 
-.header_part.with_icon i{
+.with_icon i{
     font-size: 130%;
     margin-right: 10px;
+}
+
+.unformatted_text {
+    border: none;
+    resize: none;
+}
+
+.unformatted_text:focus {
+    outline: none;
 }
 
 .right {
