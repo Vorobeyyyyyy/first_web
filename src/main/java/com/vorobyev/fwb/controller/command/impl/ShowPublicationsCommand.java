@@ -15,9 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public enum ShowPublicationsCommand implements Command {
-    INSTANCE;
-
+public class ShowPublicationsCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final PublicationService publicationService = PublicationServiceImpl.INSTANCE;
     private static final String PAGE_INDEX = "page_index";

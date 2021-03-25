@@ -18,15 +18,16 @@ public enum CommandProvider implements Command {
     SET_LOCALE(new LocaleCommand()),
     GO_TO_PUBLICATION(new GoToPublicationCommand()),
     TAKE_FILE(new TakeFileCommand()),
-    CHANGE_AVATAR(ChangeAvatarImageCommand.INSTANCE),
-    CREATE_PUBLICATION(CreatePublicationCommand.INSTANCE),
-    ADD_COMMEND(AddCommendCommand.INSTANCE),
-    LIKE(LikeCommand.INSTANCE),
-    UNLIKE(UnlikeCommand.INSTANCE),
-    SHOW_PROFILE(ShowProfileCommand.INSTANCE),
-    GO_CREATE_PUBLICATION(GoCreatePublicationCommand.INSTANCE),
-    GO_EDIT_PUBLICATION(GoEditPublicationCommand.INSTANCE),
-    SHOW_PUBLICATIONS(ShowPublicationsCommand.INSTANCE);
+    CHANGE_AVATAR(new ChangeAvatarImageCommand()),
+    CREATE_PUBLICATION(new CreatePublicationCommand()),
+    ADD_COMMEND(new AddCommendCommand()),
+    LIKE(new LikeCommand()),
+    UNLIKE(new UnlikeCommand()),
+    SHOW_PROFILE(new ShowProfileCommand()),
+    GO_CREATE_PUBLICATION(new GoCreatePublicationCommand()),
+    GO_EDIT_PUBLICATION(new GoEditPublicationCommand()),
+    SHOW_PUBLICATIONS(new ShowPublicationsCommand()),
+    SHOW_ADMIN_PANEL(new ShowAdminPanelCommand());
 
     Command command;
 

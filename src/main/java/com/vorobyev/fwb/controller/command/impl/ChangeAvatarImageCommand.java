@@ -14,9 +14,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public enum ChangeAvatarImageCommand implements Command {
-    INSTANCE;
-
+public class ChangeAvatarImageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final String AVATAR_PATH = "avatar_path";
     private static final UserService userService = UserServiceImpl.getInstance();

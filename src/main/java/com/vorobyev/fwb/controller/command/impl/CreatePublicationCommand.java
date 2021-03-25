@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public enum CreatePublicationCommand implements Command {
-    INSTANCE;
-
+public class CreatePublicationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final PublicationService publicationService = PublicationServiceImpl.INSTANCE;
     private final static String TITLE = "title";

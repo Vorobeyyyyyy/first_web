@@ -21,9 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public enum ShowProfileCommand implements Command {
-    INSTANCE;
-
+public class ShowProfileCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final String USERNAME = "username";
     private static final UserService userService = UserServiceImpl.getInstance();

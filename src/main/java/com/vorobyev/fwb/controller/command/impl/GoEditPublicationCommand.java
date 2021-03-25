@@ -15,9 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-public enum GoEditPublicationCommand implements Command {
-    INSTANCE;
-
+public class GoEditPublicationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final String PUBLICATION_ID = "publication_id";
     private static final String PUBLICATION = "publication";

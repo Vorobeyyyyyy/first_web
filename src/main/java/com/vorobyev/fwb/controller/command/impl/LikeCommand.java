@@ -15,9 +15,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public enum LikeCommand implements Command {
-    INSTANCE;
-
+public class LikeCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final String COMMEND_ID = "commend_id";
     private static final CommendService commendService = CommendServiceImpl.INSTANCE;
