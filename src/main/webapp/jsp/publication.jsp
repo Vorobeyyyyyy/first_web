@@ -3,9 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
-<jsp:useBean id="publication" scope="request" class="com.vorobyev.fwb.entity.Publication"/>
+<jsp:useBean id="publication" scope="request" class="com.vorobyev.fwb.model.entity.Publication"/>
 <jsp:useBean id="locale" scope="session" type="java.lang.String"/>
-<jsp:useBean id="commends" scope="request" type="java.util.List<com.vorobyev.fwb.entity.Commend>"/>
+<jsp:useBean id="commends" scope="request" type="java.util.List<com.vorobyev.fwb.model.entity.Commend>"/>
 <%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
 
 <html>

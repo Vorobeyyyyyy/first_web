@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib prefix="ctg" uri="customtags" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
 <jsp:useBean id="news" scope="request" type="java.util.List<com.vorobyev.fwb.entity.Publication>"/>
+<%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
 
 <html>
 <head>
@@ -19,6 +21,13 @@
         <div class="section centred">
             <div class="section_title">
                 Публикации пользователя ${publisher}
+            </div>
+        </div>
+    </c:if>
+    <c:if test="${search != null}">
+        <div class="section centred">
+            <div class="section_title">
+                Результаты поиска по запросу "${search}"
             </div>
         </div>
     </c:if>
@@ -43,4 +52,7 @@
     </c:forEach>
 </div>
 </body>
+<div class="pagination_holder">
+    <ctg:publication_pagination currentPage="${current_page}" pageCount="${page_count}" />
+</div>
 </html>

@@ -18,7 +18,7 @@
 
 .img_with_text:hover .text_on_cover {
     opacity: 1;
-    background-color: #4CAF50;
+    background-color: var(--header_color);
     font-size: 16px;
     padding: 16px 32px;
     border-radius: 10px;

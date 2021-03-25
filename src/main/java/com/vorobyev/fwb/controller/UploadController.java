@@ -1,9 +1,9 @@
 package com.vorobyev.fwb.controller;
 
-import com.vorobyev.fwb.entity.User;
+import com.vorobyev.fwb.model.entity.User;
 import com.vorobyev.fwb.exception.ServiceException;
-import com.vorobyev.fwb.service.FileService;
-import com.vorobyev.fwb.service.impl.FileServiceImpl;
+import com.vorobyev.fwb.model.service.FileService;
+import com.vorobyev.fwb.model.service.impl.FileServiceImpl;
 import com.vorobyev.fwb.util.FileName;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;

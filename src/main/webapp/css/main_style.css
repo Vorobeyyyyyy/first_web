@@ -40,3 +40,29 @@ body {
     margin-right: 10px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.pagination_holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination_page {
+    height: 50px;
+    width: 50px;
+    background-color: var(--header_color);
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination_page + .pagination_page {
+    margin-left: 5px;
+}
+
+.current_page.current_page {
+    background-color: var(--header_sub_color);
+}

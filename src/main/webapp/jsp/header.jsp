@@ -13,8 +13,9 @@
         <a class="header_reference header_part hoverable" href="#"><fmt:message key="header.engineering"/></a>
         <a class="header_reference header_part hoverable" href="#"><fmt:message key="header.games"/></a>
         <a class="header_reference header_part hoverable" href="#"><fmt:message key="header.reviews"/></a>
-        <form action="get" class="header_part search right">
-            <input class="search_field" type="text" placeholder="<fmt:message key="header.search"/>">
+        <form action="main.do" class="header_part search right">
+            <input type="hidden" name="command" value="show_publications">
+            <input name="search" class="search_field" type="text" placeholder="<fmt:message key="header.search"/>">
             <button class="search_submit" type="submit" value=""><i class="fas fa-search"></i></button>
         </form>
         <c:choose>

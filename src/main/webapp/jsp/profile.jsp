@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
-<jsp:useBean id="requestedUser" class="com.vorobyev.fwb.entity.User" scope="request"/>
-<jsp:useBean id="commends" scope="request" type="java.util.List<com.vorobyev.fwb.entity.Commend>"/>
+<jsp:useBean id="requestedUser" class="com.vorobyev.fwb.model.entity.User" scope="request"/>
+<jsp:useBean id="commends" scope="request" type="java.util.List<com.vorobyev.fwb.model.entity.Commend>"/>
 <jsp:useBean id="canEdit" scope="request" type="java.lang.Boolean"/>
 <jsp:useBean id="isPublisher" scope="request" type="java.lang.Boolean"/>
 <%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
@@ -36,7 +36,7 @@
     </div>
     <c:if test="${isPublisher}">
         <div class="section">
-            <a href="${pageContext.request.contextPath}${WebPagePathPrepared.MAIN_WITH_PUBLISHER.formatted(requestedUser.login)}" class="publications_button hoverable">Прейти к публикациям</a>
+            <a href="${pageContext.request.contextPath}${WebPagePathPrepared.MAIN}&${WebPagePathPrepared.MAIN_PUBLISHER.formatted(requestedUser.login)}" class="publications_button hoverable">Прейти к публикациям</a>
             <c:if test="${canEdit}">
                 <a href="${pageContext.request.contextPath}${WebPagePathPrepared.GO_CREATE_PUBLICATION}" class="publications_button hoverable">Создать</a>
             </c:if>

@@ -1,13 +1,12 @@
 package com.vorobyev.fwb.controller;
 
-import com.vorobyev.fwb.command.Command;
-import com.vorobyev.fwb.command.CommandProvider;
+import com.vorobyev.fwb.controller.command.Command;
+import com.vorobyev.fwb.controller.command.CommandProvider;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.util.Locale;
 import java.util.Optional;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;

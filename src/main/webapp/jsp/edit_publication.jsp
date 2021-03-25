@@ -4,7 +4,7 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
 <%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
-<jsp:useBean id="publication" scope="request" class="com.vorobyev.fwb.entity.Publication"/>
+<jsp:useBean id="publication" scope="request" class="com.vorobyev.fwb.model.entity.Publication"/>
 
 <html>
 <head>
