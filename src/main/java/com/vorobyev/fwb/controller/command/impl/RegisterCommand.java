@@ -32,7 +32,7 @@ public class RegisterCommand implements Command {
     private final UserServiceImpl userService = UserServiceImpl.getInstance();
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String login = request.getParameter(LOGIN);
         String password = request.getParameter(PASSWORD);
         String firstName = request.getParameter(FIRST_NAME);

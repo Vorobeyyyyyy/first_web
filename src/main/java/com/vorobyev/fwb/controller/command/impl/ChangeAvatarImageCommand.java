@@ -21,7 +21,7 @@ public class ChangeAvatarImageCommand implements Command {
     private static final UserService userService = UserServiceImpl.getInstance();
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         String newPath = request.getParameter(AVATAR_PATH);
         User user = (User) request.getSession().getAttribute(SessionAttributeName.USER);

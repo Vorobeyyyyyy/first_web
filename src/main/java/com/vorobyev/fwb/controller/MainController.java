@@ -33,7 +33,7 @@ public class MainController extends HttpServlet {
 
         Command command = commandOptional.get();
         logger.log(Level.INFO, "Command: {}", command);
-        String page = command.preform(request, response);
+        String page = command.perform(request, response);
 
         if (page.isEmpty()) {
             return;

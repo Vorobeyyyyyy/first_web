@@ -7,7 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface Command {
-    String preform(HttpServletRequest request, HttpServletResponse response);
+    /**
+     *
+     * @param request request a Processed Request
+     * @param response request a Processed Request
+     * @return path to forward or redirect
+     */
+
+    String perform(HttpServletRequest request, HttpServletResponse response);
 
     default List<UserRole> getAllowedAccessLevels() {
         return List.of(UserRole.values());

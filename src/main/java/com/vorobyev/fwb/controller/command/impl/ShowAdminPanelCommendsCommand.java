@@ -21,7 +21,7 @@ public class ShowAdminPanelCommendsCommand implements Command {
     private static final CommendService COMMENDS_SERVICE = CommendServiceImpl.INSTANCE;
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         try {
             List<Commend> commends = COMMENDS_SERVICE.findAll(0, COMMENDS_PER_PAGE);

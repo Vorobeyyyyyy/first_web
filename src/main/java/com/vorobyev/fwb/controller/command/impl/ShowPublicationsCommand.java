@@ -27,7 +27,7 @@ public class ShowPublicationsCommand implements Command {
     private static final int PUBLICATION_PER_PAGE = 3;
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         String pageIndexString = request.getParameter(PAGE_INDEX);
         String publisher = request.getParameter(PUBLISHER);

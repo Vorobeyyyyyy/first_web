@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LogoutCommand implements Command {
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.setAttribute(SessionAttributeName.IS_LOGIN, false);
         session.setAttribute(SessionAttributeName.USER, null);

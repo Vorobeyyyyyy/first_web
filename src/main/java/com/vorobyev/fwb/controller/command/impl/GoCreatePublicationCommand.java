@@ -15,7 +15,7 @@ public class GoCreatePublicationCommand implements Command {
     private static final String USER = "requestedUser";
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         return WebPagePath.CREATE_PUBLICATION;
     }
 

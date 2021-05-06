@@ -21,7 +21,7 @@ public class TakeFileCommand implements Command {
     private static final String CAUSE_HEADER = "cause";
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String fileName = request.getParameter(FILE_NAME);
         if (fileName.isEmpty()) {
             return "";

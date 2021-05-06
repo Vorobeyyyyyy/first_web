@@ -1,7 +1,6 @@
 package com.vorobyev.fwb.tag;
 
 import com.vorobyev.fwb.controller.WebPagePathPrepared;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

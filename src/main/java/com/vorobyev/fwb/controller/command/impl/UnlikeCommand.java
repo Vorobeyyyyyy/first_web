@@ -21,7 +21,7 @@ public class UnlikeCommand implements Command {
     private static final CommendService commendService = CommendServiceImpl.INSTANCE;
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         long commendId;
         String username = ((User) request.getSession().getAttribute(SessionAttributeName.USER)).getLogin();
         String publicationIdString = request.getParameter(COMMEND_ID);

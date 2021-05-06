@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GoRegisterCommand implements Command {
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         return WebPagePath.REGISTER;
     }
 }

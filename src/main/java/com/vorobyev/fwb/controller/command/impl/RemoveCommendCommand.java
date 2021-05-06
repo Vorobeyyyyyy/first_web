@@ -22,7 +22,7 @@ public class RemoveCommendCommand implements Command {
     private final static CommendService commendService = CommendServiceImpl.INSTANCE;
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         Long id = Long.parseLong(request.getParameter(ID));
         try {

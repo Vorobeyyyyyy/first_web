@@ -32,7 +32,7 @@ public class GoPublicationCommand implements Command {
     private static final String EMPTY = "";
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         long publicationId;
         String path;
         String username;

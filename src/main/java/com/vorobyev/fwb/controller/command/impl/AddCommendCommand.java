@@ -23,7 +23,7 @@ public class AddCommendCommand implements Command {
     private static final CommendService commendService = CommendServiceImpl.INSTANCE;
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         String body = request.getParameter(BODY);
         String publicationId = request.getParameter(PUBLICATION_ID);

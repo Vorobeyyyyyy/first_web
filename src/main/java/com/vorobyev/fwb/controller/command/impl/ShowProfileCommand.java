@@ -32,7 +32,7 @@ public class ShowProfileCommand implements Command {
     private static final String CAN_EDIT = "canEdit";
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String username = request.getParameter(USERNAME);
         HttpSession session = request.getSession();
         Boolean canEdit = (Boolean) session.getAttribute(SessionAttributeName.IS_LOGIN) && ((User) session.getAttribute(SessionAttributeName.USER)).getLogin().equals(username);

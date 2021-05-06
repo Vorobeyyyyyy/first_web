@@ -16,7 +16,7 @@ public class GoProfileCommand implements Command {
     private static final String USER = "requestedUser";
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         User user = (User) request.getSession().getAttribute(SessionAttributeName.USER);
         request.setAttribute(USER, user);
         return WebPagePath.PROFILE;

@@ -18,7 +18,7 @@ public class ShowAdminPanelUsersCommand implements Command {
     private static final UserService USER_SERVICE = UserServiceImpl.getInstance();
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         try {
             List<User> users = USER_SERVICE.findAll(0, USERS_PER_PAGE);

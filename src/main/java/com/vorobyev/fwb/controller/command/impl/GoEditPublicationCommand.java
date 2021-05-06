@@ -24,7 +24,7 @@ public class GoEditPublicationCommand implements Command {
     private static final PublicationService publicationService = PublicationServiceImpl.INSTANCE;
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         long publicationId = Long.parseLong(request.getParameter(PUBLICATION_ID));
         try {

@@ -18,7 +18,7 @@ public class ShowAdminPanelPublicationsCommand implements Command {
     private static final PublicationService PUBLICATION_SERVICE = PublicationServiceImpl.INSTANCE;
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         try {
             List<Publication> publications = PUBLICATION_SERVICE.findAll(0, PUBLICATION_PER_PAGE);

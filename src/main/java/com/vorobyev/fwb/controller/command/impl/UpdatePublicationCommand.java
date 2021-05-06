@@ -29,7 +29,7 @@ public class UpdatePublicationCommand implements Command {
     private final static String PUBLICATION_ID = "publication_id";
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         User user = (User) request.getSession().getAttribute(SessionAttributeName.USER);
         String title = request.getParameter(TITLE);

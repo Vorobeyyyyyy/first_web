@@ -16,7 +16,7 @@ public class LocaleCommand implements Command {
     private final static String PREV_PAGE = "prev_page";
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         String locale = request.getParameter(LANGUAGE);
         String queryString = request.getQueryString();

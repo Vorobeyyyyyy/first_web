@@ -9,7 +9,7 @@
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
             <PatternLayout pattern="${PATTERN_CONSOLE}"/>
         </Console>
-        <RollingFile name="FileAppender" fileName="${LOG_DIR}/log.txt" filePattern="${LOG_DIR}/log_%d{yyyy.MM.dd HH:mm:ss.SSS}-%i.txt">
+        <RollingFile name="FileAppender" fileName="${LOG_DIR}/log.txt" filePattern="${LOG_DIR}/log_%d{yyyy.MM.dd HH-mm-ss-SSS}-%i.txt">
             <PatternLayout pattern="${PATTERN_FILE}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="2 MB"/>

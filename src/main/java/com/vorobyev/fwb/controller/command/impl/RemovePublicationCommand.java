@@ -22,7 +22,7 @@ public class RemovePublicationCommand implements Command {
     private final static PublicationService publicationService = PublicationServiceImpl.INSTANCE;
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         Long id = Long.parseLong(request.getParameter(ID));
         try {

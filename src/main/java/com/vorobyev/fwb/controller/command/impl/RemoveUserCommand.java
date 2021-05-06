@@ -23,7 +23,7 @@ public class RemoveUserCommand implements Command {
 
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
         String path;
         String login = request.getParameter(LOGIN);
         try {

@@ -42,8 +42,8 @@ public enum CommandProvider implements Command {
     }
 
     @Override
-    public String preform(HttpServletRequest request, HttpServletResponse response) {
-        return command.preform(request, response);
+    public String perform(HttpServletRequest request, HttpServletResponse response) {
+        return command.perform(request, response);
     }
 
     @Override
