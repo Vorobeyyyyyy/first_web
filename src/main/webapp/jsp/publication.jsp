@@ -13,7 +13,6 @@
     <title>${publication.title}</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/publication_style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script>const likeCommand = "${pageContext.request.contextPath}/like.do";</script>
     <script>const srcPrefix = "${pageContext.request.contextPath}${WebPagePathPrepared.TAKE_FILE}" </script>
     <script>const isLogin = "${is_login}"</script>

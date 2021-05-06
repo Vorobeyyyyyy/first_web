@@ -1,25 +1,26 @@
 package com.vorobyev.fwb.controller.command;
 
-import com.vorobyev.fwb.command.impl.*;
 import com.vorobyev.fwb.controller.command.impl.*;
+import com.vorobyev.fwb.model.entity.UserRole;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 public enum CommandProvider implements Command {
     REGISTER(new RegisterCommand()),
     LOGIN(new LoginCommand()),
-    GO_TO_LOGIN(new GoToLoginCommand()),
-    GO_TO_REGISTER(new GoToRegisterCommand()),
+    GO_TO_LOGIN(new GoLoginCommand()),
+    GO_TO_REGISTER(new GoRegisterCommand()),
     LOGOUT(new LogoutCommand()),
-    GO_TO_PROFILE(new GoToProfileCommand()),
+    GO_TO_PROFILE(new GoProfileCommand()),
     SET_LOCALE(new LocaleCommand()),
-    GO_TO_PUBLICATION(new GoToPublicationCommand()),
+    GO_TO_PUBLICATION(new GoPublicationCommand()),
     TAKE_FILE(new TakeFileCommand()),
     CHANGE_AVATAR(new ChangeAvatarImageCommand()),
-    CREATE_PUBLICATION(new CreatePublicationCommand()),
+    UPDATE_PUBLICATION(new UpdatePublicationCommand()),
     ADD_COMMEND(new AddCommendCommand()),
     LIKE(new LikeCommand()),
     UNLIKE(new UnlikeCommand()),
@@ -27,7 +28,12 @@ public enum CommandProvider implements Command {
     GO_CREATE_PUBLICATION(new GoCreatePublicationCommand()),
     GO_EDIT_PUBLICATION(new GoEditPublicationCommand()),
     SHOW_PUBLICATIONS(new ShowPublicationsCommand()),
-    SHOW_ADMIN_PANEL(new ShowAdminPanelCommand());
+    SHOW_ADMIN_PANEL_USERS(new ShowAdminPanelUsersCommand()),
+    SHOW_ADMIN_PANEL_COMMENDS(new ShowAdminPanelCommendsCommand()),
+    SHOW_ADMIN_PANEL_PUBLICATIONS(new ShowAdminPanelPublicationsCommand()),
+    REMOVE_PUBLICATION(new RemovePublicationCommand()),
+    REMOVE_COMMEND(new RemoveCommendCommand()),
+    REMOVE_USER(new RemoveUserCommand());
 
     Command command;
 
@@ -38,6 +44,11 @@ public enum CommandProvider implements Command {
     @Override
     public String preform(HttpServletRequest request, HttpServletResponse response) {
         return command.preform(request, response);
+    }
+
+    @Override
+    public List<UserRole> getAllowedAccessLevels() {
+        return command.getAllowedAccessLevels();
     }
 
     public static Optional<Command> defineCommand(String commandName) {
@@ -54,4 +65,6 @@ public enum CommandProvider implements Command {
         }
         return optionalCommand;
     }
+
+
 }

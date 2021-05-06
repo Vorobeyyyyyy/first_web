@@ -53,7 +53,7 @@ submitButton.onclick = function () {
         }
     }
     formContent.innerText = a
-    formSummary.innerText = newsBody.childNodes[1].innerText
+    formSummary.innerText = newsBody.firstElementChild.innerText
     formTitle.innerText = realTitle.value
     formImg.value = extractImgPath(realImg.src)
     hiddenForm.submit()
@@ -64,9 +64,8 @@ function extractImgPath(fullPath) {
 }
 
 
-const body = document.getElementsByClassName('news_body').item(0)
+const body = document.getElementsByClassName('news_body')[0]
 const raw = body.innerText
-console.log(raw.length)
 if (raw.length > 2) {
     body.innerHTML = ''
     const parts = raw.split('$$$END$$$')

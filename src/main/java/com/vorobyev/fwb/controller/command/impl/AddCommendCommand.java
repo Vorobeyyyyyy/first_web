@@ -30,7 +30,7 @@ public class AddCommendCommand implements Command {
         String nickname = ((User)request.getSession().getAttribute(SessionAttributeName.USER)).getLogin();
         try {
             commendService.addCommend(body, nickname, Long.parseLong(publicationId));
-            path = request.getContextPath() + String.format(WebPagePathPrepared.PUBLICATION_WITH_ID, publicationId); //todo: change to .formatted
+            path = WebPagePath.REDIRECT + String.format(WebPagePathPrepared.PUBLICATION_WITH_ID, publicationId);
         } catch (ServiceException | NumberFormatException exception) {
             path = WebPagePath.ERROR;
             request.setAttribute(ErrorPageAttribute.EXCEPTION, exception);

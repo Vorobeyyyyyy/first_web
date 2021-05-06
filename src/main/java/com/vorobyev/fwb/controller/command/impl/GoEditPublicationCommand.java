@@ -5,6 +5,7 @@ import com.vorobyev.fwb.controller.ErrorPageAttribute;
 import com.vorobyev.fwb.controller.WebPagePath;
 import com.vorobyev.fwb.model.entity.Publication;
 import com.vorobyev.fwb.exception.ServiceException;
+import com.vorobyev.fwb.model.entity.UserRole;
 import com.vorobyev.fwb.model.service.PublicationService;
 import com.vorobyev.fwb.model.service.impl.PublicationServiceImpl;
 import org.apache.logging.log4j.Level;
@@ -13,13 +14,14 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
 
 public class GoEditPublicationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final String PUBLICATION_ID = "publication_id";
     private static final String PUBLICATION = "publication";
-    private final PublicationService publicationService = PublicationServiceImpl.INSTANCE;
+    private static final PublicationService publicationService = PublicationServiceImpl.INSTANCE;
 
     @Override
     public String preform(HttpServletRequest request, HttpServletResponse response) {
@@ -42,5 +44,10 @@ public class GoEditPublicationCommand implements Command {
             path = WebPagePath.ERROR;
         }
         return path;
+    }
+
+    @Override
+    public List<UserRole> getAllowedAccessLevels() {
+        return List.of(UserRole.PUBLISHER, UserRole.ADMIN);
     }
 }

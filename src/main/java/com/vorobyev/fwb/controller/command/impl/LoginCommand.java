@@ -4,6 +4,7 @@ import com.vorobyev.fwb.controller.command.Command;
 import com.vorobyev.fwb.controller.WebPagePathPrepared;
 import com.vorobyev.fwb.model.entity.User;
 import com.vorobyev.fwb.exception.ServiceException;
+import com.vorobyev.fwb.model.entity.UserRole;
 import com.vorobyev.fwb.model.service.impl.UserServiceImpl;
 import com.vorobyev.fwb.controller.SessionAttributeName;
 import com.vorobyev.fwb.controller.WebPagePath;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
@@ -35,7 +37,7 @@ public class LoginCommand implements Command {
                 User user = userService.login(login, password);
                 session.setAttribute(SessionAttributeName.IS_LOGIN, true);
                 session.setAttribute(SessionAttributeName.USER, user);
-                resultPage = request.getContextPath() + String.format(WebPagePathPrepared.SHOW_PROFILE, login);
+                resultPage = WebPagePath.REDIRECT + String.format(WebPagePathPrepared.SHOW_PROFILE, login);
             } catch (ServiceException exception) {
                 logger.log(Level.ERROR, exception.getMessage());
                 request.setAttribute(ERROR_MESSAGE, exception.getMessage());
@@ -46,5 +48,10 @@ public class LoginCommand implements Command {
             resultPage = WebPagePath.PROFILE;
         }
         return resultPage;
+    }
+
+    @Override
+    public List<UserRole> getAllowedAccessLevels() {
+        return List.of(UserRole.GUEST);
     }
 }

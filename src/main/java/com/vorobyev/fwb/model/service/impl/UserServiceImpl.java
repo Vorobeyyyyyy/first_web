@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -125,5 +126,25 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("in userByLogin", exception);
         }
         return user;
+    }
+
+    @Override
+    public List<User> findAll(int startIndex, int count) throws ServiceException {
+        List<User> users;
+        try {
+            users = userDao.findAll(startIndex, count);
+        } catch (DaoException exception) {
+            throw new ServiceException(exception);
+        }
+        return users;
+    }
+
+    @Override
+    public void removeByLogin(String login) throws ServiceException {
+        try {
+            userDao.removeByLogin(login);
+        } catch (DaoException exception) {
+            throw new ServiceException(exception);
+        }
     }
 }

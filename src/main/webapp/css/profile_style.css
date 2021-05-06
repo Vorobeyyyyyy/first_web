@@ -103,9 +103,19 @@
     font-size: 20px;
 }
 
-.publications_button {
+.profile_button {
+    margin: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 40px;
     background-color: var(--header_color);
+}
+
+.profile_button_text {
+    text-decoration: none;
+    color: white;
 }
 
 .subsribe {

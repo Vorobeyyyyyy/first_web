@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
+<%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
 
 <html>
 
@@ -38,8 +39,8 @@
                 <%=builder%>
             </div>
         </c:if>
+        <a class="custom_a go_main" href="${pageContext.request.contextPath}${WebPagePathPrepared.MAIN}">Go to Main</a>
     </div>
 </div>
 </body>
-
 </html>

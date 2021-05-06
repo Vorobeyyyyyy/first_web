@@ -9,18 +9,18 @@ public class User implements Serializable {
     private String secondName;
     private String email;
     private String avatarPath;
-    private UserAccessLevel level;
+    private UserRole role;
 
     public User() {
     }
 
-    public User(String login, String firstName, String secondName, String email, String avatarPath, UserAccessLevel level) {
+    public User(String login, String firstName, String secondName, String email, String avatarPath, UserRole level) {
         this.login = login;
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;
         this.avatarPath = avatarPath;
-        this.level = level;
+        this.role = level;
     }
 
     public User(String login, String firstName, String secondName, String email) {
@@ -28,7 +28,7 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;
-        this.level = UserAccessLevel.USER;
+        this.role = UserRole.USER;
         this.avatarPath = DEFAULT_AVATAR_PATH;
     }
 
@@ -72,12 +72,12 @@ public class User implements Serializable {
         this.avatarPath = avatarPath;
     }
 
-    public UserAccessLevel getLevel() {
-        return level;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setLevel(UserAccessLevel level) {
-        this.level = level;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     @Override

@@ -43,7 +43,7 @@
         <button class="reject_button" type="button">Reject</button>
     </div>
     <form method="POST" action="publ.do" style="display: none;" id="hidden_form">
-        <input type="hidden" name="command" value="edit_publication">
+        <input type="hidden" name="command" value="UPDATE_PUBLICATION">
         <input type="hidden" name="publication_id" value="${publication.id}">
         <input type="text" id="form_img" name="image_path" value="">
         <textarea id="form_title" name="title"></textarea>

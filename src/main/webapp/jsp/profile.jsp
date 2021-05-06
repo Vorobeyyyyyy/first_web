@@ -8,6 +8,7 @@
 <jsp:useBean id="canEdit" scope="request" type="java.lang.Boolean"/>
 <jsp:useBean id="isPublisher" scope="request" type="java.lang.Boolean"/>
 <%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
+<%@ page import="com.vorobyev.fwb.model.entity.UserRole" %>
 
 <html>
 
@@ -29,16 +30,26 @@
         <div class="profile_information">
             <div class="profile_name">${requestedUser.login}</div>
             <div class="profile_text"><fmt:message key="profile.level"/>: <fmt:message
-                    key="user.${requestedUser.level.toString().toLowerCase()}"/></div>
-            <div class="profile_text"><fmt:message key="profile.name"/>: ${requestedUser.firstName} ${requestedUser.secondName}</div>
+                    key="user.${requestedUser.role.toString().toLowerCase()}"/></div>
+            <div class="profile_text"><fmt:message
+                    key="profile.name"/>: ${requestedUser.firstName} ${requestedUser.secondName}</div>
             <div class="profile_text"><fmt:message key="profile.email"/>: ${requestedUser.email}</div>
         </div>
     </div>
     <c:if test="${isPublisher}">
         <div class="section">
-            <a href="${pageContext.request.contextPath}${WebPagePathPrepared.MAIN}&${WebPagePathPrepared.MAIN_PUBLISHER.formatted(requestedUser.login)}" class="publications_button hoverable">Прейти к публикациям</a>
+            <div class="profile_button hoverable">
+                <a href="${pageContext.request.contextPath}${WebPagePathPrepared.MAIN}&${WebPagePathPrepared.MAIN_PUBLISHER.formatted(requestedUser.login)}"
+                 class="profile_button_text">Прейти к публикациям</a></div>
             <c:if test="${canEdit}">
-                <a href="${pageContext.request.contextPath}${WebPagePathPrepared.GO_CREATE_PUBLICATION}" class="publications_button hoverable">Создать</a>
+                <div class="profile_button hoverable"><a
+                        href="${pageContext.request.contextPath}${WebPagePathPrepared.GO_CREATE_PUBLICATION}"
+                        class="profile_button_text">Создать публикацию</a></div>
+            </c:if>
+            <c:if test="${canEdit && requestedUser.role == UserRole.ADMIN}">
+                <div class="profile_button hoverable"><a
+                        href="${pageContext.request.contextPath}${WebPagePathPrepared.ADMIN_USERS}"
+                        class="profile_button_text">Перейти к панели администратора</a></div>
             </c:if>
         </div>
     </c:if>
@@ -46,7 +57,8 @@
         <div class="section_title"><fmt:message key="profile.commends"/>:</div>
         <c:forEach var="commend" items="${commends}">
             <div class="commend">
-                <a class="commended_publ custom_a" href="${pageContext.request.contextPath}${WebPagePathPrepared.PUBLICATION_WITH_ID.formatted(commend.publicationId)}">${commend.publicationTitle}</a>
+                <a class="commended_publ custom_a"
+                   href="${pageContext.request.contextPath}${WebPagePathPrepared.PUBLICATION_WITH_ID.formatted(commend.publicationId)}">${commend.publicationTitle}</a>
                 <div class="commend_text">${commend.body}</div>
             </div>
         </c:forEach>

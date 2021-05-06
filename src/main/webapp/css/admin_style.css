@@ -1,0 +1,137 @@
+.admin {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.module_selector {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.module_button {
+    width: 100%;
+    border: none;
+    height: 30px;
+    cursor: pointer;
+    color: white;
+    background-color: var(--header_color);
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.module_button:focus {
+    outline: none;
+    background-color: var(--header_sub_color);
+}
+
+.selected {
+    background-color: var(--header_sub_color);
+}
+
+.filter {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.text_filter {
+    font-size: 17px;
+    width: 70%;
+}
+
+.text_filter + .text_filter {
+    margin-left: 10px;
+}
+
+.checkbox_text {
+    margin-left: 10px;
+}
+
+.checkbox_holder {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 10px;
+    background-color: var(--background_color);
+    padding: 5px;
+}
+
+.filter_button {
+    border: none;
+    height: 30px;
+    width: 50%;
+    margin-left: 5px;
+    cursor: pointer;
+    color: white;
+    background-color: var(--header_color);
+    font-size: 15px;
+    margin-left: auto;
+}
+
+.filter_button:focus {
+    outline: none;
+    background-color: var(--header_sub_color);
+}
+
+.entity {
+    background-color: var(--background_color);
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+    padding: 5px 0px;
+    align-items: center;
+}
+
+.entity_text {
+    margin: 0px 10px;
+    width: 100%;
+}
+
+.entity_button {
+    padding: 0 5px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: black;
+    margin-left: 10px;
+    height: 30px;
+    text-align: center;
+    border: none;
+    color: white;
+    background-color: var(--header_color);
+}
+
+.entity_button:hover{
+    cursor: pointer;
+}
+
+.user_button:hover {
+    cursor: pointer;
+}
+
+.entity_preview {
+    margin-left: 10px;
+    width: 70px;
+    height: 70px;
+    object-fit: scale-down;
+}
+
+.text_date {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    width: 40%;
+}
+
+.text_date input {
+    margin-left: 5px;
+}
+
+.number_filter {
+    font-size: 17px;
+    width: 30%;
+    margin-left: 5px;
+}

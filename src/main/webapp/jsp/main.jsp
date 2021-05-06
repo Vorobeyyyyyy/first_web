@@ -4,7 +4,7 @@
 <%@taglib prefix="ctg" uri="customtags" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="pagecontent"/>
-<jsp:useBean id="news" scope="request" type="java.util.List<com.vorobyev.fwb.entity.Publication>"/>
+<jsp:useBean id="news" scope="request" type="java.util.List<com.vorobyev.fwb.model.entity.Publication>"/>
 <%@ page import="com.vorobyev.fwb.controller.WebPagePathPrepared" %>
 
 <html>

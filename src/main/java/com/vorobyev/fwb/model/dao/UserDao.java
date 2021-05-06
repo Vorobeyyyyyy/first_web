@@ -3,6 +3,7 @@ package com.vorobyev.fwb.model.dao;
 import com.vorobyev.fwb.model.entity.User;
 import com.vorobyev.fwb.exception.DaoException;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
@@ -15,4 +16,8 @@ public interface UserDao {
     void changeAvatar(String username, String newImagePath) throws DaoException;
 
     Optional<User> findByLogin(String login) throws DaoException;
+
+    List<User> findAll(int startIndex, int count) throws DaoException;
+
+    public void removeByLogin(String login) throws DaoException;
 }

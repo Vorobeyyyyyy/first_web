@@ -6,7 +6,7 @@ import com.vorobyev.fwb.controller.SessionAttributeName;
 import com.vorobyev.fwb.controller.WebPagePath;
 import com.vorobyev.fwb.model.entity.Commend;
 import com.vorobyev.fwb.model.entity.User;
-import com.vorobyev.fwb.model.entity.UserAccessLevel;
+import com.vorobyev.fwb.model.entity.UserRole;
 import com.vorobyev.fwb.exception.ServiceException;
 import com.vorobyev.fwb.model.service.CommendService;
 import com.vorobyev.fwb.model.service.UserService;
@@ -40,7 +40,7 @@ public class ShowProfileCommand implements Command {
         User user;
         try {
             user = userService.userByLogin(username);
-            Boolean isPublisher = List.of(UserAccessLevel.PUBLISHER, UserAccessLevel.ADMIN).contains(user.getLevel());
+            Boolean isPublisher = List.of(UserRole.PUBLISHER, UserRole.ADMIN).contains(user.getRole());
             List<Commend> commends = commendService.findByUsername(username);
             request.setAttribute(USER, user);
             request.setAttribute(COMMENDS, commends);

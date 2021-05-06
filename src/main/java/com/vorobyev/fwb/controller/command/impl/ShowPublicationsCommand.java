@@ -24,7 +24,7 @@ public class ShowPublicationsCommand implements Command {
     private static final String PUBLISHER = "publisher";
     private static final String NEWS = "news";
     private static final String SEARCH = "search";
-    private static final int PUBLICATION_PER_PAGE = 10;
+    private static final int PUBLICATION_PER_PAGE = 3;
 
     @Override
     public String preform(HttpServletRequest request, HttpServletResponse response) {
@@ -32,6 +32,7 @@ public class ShowPublicationsCommand implements Command {
         String pageIndexString = request.getParameter(PAGE_INDEX);
         String publisher = request.getParameter(PUBLISHER);
         String searchText = request.getParameter(SEARCH);
+        logger.log(Level.INFO, "Search text: {}", searchText);
         int pageIndex;
         try {
             pageIndex = Integer.parseInt(pageIndexString);
@@ -43,7 +44,7 @@ public class ShowPublicationsCommand implements Command {
             List<Publication> publications;
             int startIndex = pageIndex * PUBLICATION_PER_PAGE;
             if (publisher == null && searchText == null) {
-                publications = publicationService.findPublications(startIndex, PUBLICATION_PER_PAGE);
+                publications = publicationService.findAll(startIndex, PUBLICATION_PER_PAGE);
             } else {
                 if (publisher != null) {
                     publications = publicationService.findPublicationsByPublisher(startIndex, PUBLICATION_PER_PAGE, publisher);

@@ -6,7 +6,7 @@ import com.vorobyev.fwb.controller.WebPagePath;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GoToLoginCommand implements Command {
+public class GoLoginCommand implements Command {
     @Override
     public String preform(HttpServletRequest request, HttpServletResponse response) {
         return WebPagePath.LOGIN;

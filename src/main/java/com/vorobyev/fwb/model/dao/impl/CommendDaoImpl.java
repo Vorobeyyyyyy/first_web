@@ -4,6 +4,7 @@ import com.vorobyev.fwb.model.dao.CommendDao;
 import com.vorobyev.fwb.model.entity.Commend;
 import com.vorobyev.fwb.exception.ConnectionPoolException;
 import com.vorobyev.fwb.exception.DaoException;
+import com.vorobyev.fwb.model.entity.User;
 import com.vorobyev.fwb.model.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,6 +40,9 @@ public enum CommendDaoImpl implements CommendDao {
     private final static String INSERT_COMMEND = "INSERT INTO commends (body, publisherId, publicationId, date) VALUES (?, ?, ?, ?)";
     private final static String LIKE_COMMEND = "INSERT INTO likes (userId, commendId) VALUES (?, ?)";
     private final static String UNLIKE_COMMEND = "DELETE FROM likes WHERE userId = ? AND commendId = ?";
+    private static final String ALL = "SELECT c.commendId, c.publicationId, c.body, c.date, c.publisherId, p.title, COUNT(l.userId) FROM commends c JOIN publications p on c.publicationId = p.publicationId LEFT JOIN likes l ON c.commendId = l.commendId GROUP BY date ORDER BY date DESC LIMIT ? OFFSET ? ";
+    private static final String REMOVE_COMMEND = "DELETE FROM commends WHERE commendId = ?";
+
 
     @Override
     public void addCommend(Commend commend) throws DaoException {
@@ -120,6 +124,33 @@ public enum CommendDaoImpl implements CommendDao {
         }
     }
 
+    @Override
+    public List<Commend> findAll(int startIndex, int count) throws DaoException {
+        List<Commend> result = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ALL)) {
+            statement.setInt(1, count);
+            statement.setInt(2, startIndex);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Commend commend = new Commend();
+                commend.setId(resultSet.getLong(1));
+                commend.setPublicationId(resultSet.getLong(2));
+                commend.setBody(resultSet.getString(3));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(resultSet.getLong(4));
+                commend.setDate(calendar);
+                commend.setPublisherName(resultSet.getString(5));
+                commend.setPublicationTitle(resultSet.getString(6));
+                commend.setLikesCount(resultSet.getInt(7));
+                result.add(commend);
+            }
+        } catch (SQLException | ConnectionPoolException exception) {
+            throw new DaoException(exception);
+        }
+        return result;
+    }
+
     private Commend commendFromResultSet(ResultSet resultSet) throws SQLException {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(resultSet.getLong(4));
@@ -133,5 +164,14 @@ public enum CommendDaoImpl implements CommendDao {
                 resultSet.getBoolean(8));
     }
 
-
+    @Override
+    public void removeById(Long id) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(REMOVE_COMMEND)) {
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException exception) {
+            throw new DaoException(exception);
+        }
+    }
 }

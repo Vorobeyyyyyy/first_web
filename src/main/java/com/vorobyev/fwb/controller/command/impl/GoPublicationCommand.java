@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
-public class GoToPublicationCommand implements Command {
+public class GoPublicationCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final PublicationService publicationService = PublicationServiceImpl.INSTANCE;
     private static final CommendService commendService = CommendServiceImpl.INSTANCE;

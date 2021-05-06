@@ -1,6 +1,6 @@
 package com.vorobyev.fwb.model.entity;
 
-public enum UserAccessLevel {
+public enum UserRole {
     GUEST,
     USER,
     PUBLISHER,

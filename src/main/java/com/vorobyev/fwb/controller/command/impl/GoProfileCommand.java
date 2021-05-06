@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GoToProfileCommand implements Command {
+public class GoProfileCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
     private static final String USER = "requestedUser";

@@ -15,14 +15,11 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "mainServlet", urlPatterns = {"*.do"})
 public class MainController extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
-    private static final String ENCODING = "UTF-8";
 
     private static final String COMMAND = "command";
 
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         logger.log(Level.INFO, "New GET (Url = {})", request.getRequestURL() + (request.getQueryString() != null ? "?" + request.getQueryString() : ""));
-
-        request.setCharacterEncoding(ENCODING);
 
         String commandId = request.getParameter(COMMAND);
         Optional<Command> commandOptional = CommandProvider.defineCommand(commandId);
@@ -42,11 +39,12 @@ public class MainController extends HttpServlet {
             return;
         }
 
-        if (!page.contains(request.getContextPath())) {
+        if (page.indexOf(WebPagePath.REDIRECT) != 0) {
             request.getRequestDispatcher(page).forward(request, response);
         } else {
+            page = page.substring(WebPagePath.REDIRECT.length());
             logger.log(Level.INFO, "Redirected to {}", page);
-            response.sendRedirect(page);
+            response.sendRedirect(request.getContextPath() + page);
         }
     }
 

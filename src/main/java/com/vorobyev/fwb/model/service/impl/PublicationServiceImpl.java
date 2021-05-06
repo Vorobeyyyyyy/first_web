@@ -19,10 +19,10 @@ public enum PublicationServiceImpl implements PublicationService {
     private final static PublicationDao publicationDao = PublicationDaoImpl.getInstance();
 
     @Override
-    public List<Publication> findPublications(int startIndex, int count) throws ServiceException {
+    public List<Publication> findAll(int startIndex, int count) throws ServiceException {
         List<Publication> result;
         try {
-            result = publicationDao.find(startIndex, count);
+            result = publicationDao.findAll(startIndex, count);
         } catch (DaoException exception) {
             throw new ServiceException(exception);
         }
@@ -65,12 +65,10 @@ public enum PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public Publication addPublication(User user, String title, String mainImagePath, String summary, String content) throws ServiceException {
-
-        //todo: add validation
+    public Publication createPublication(User user, String title, String mainImagePath, String summary, String content) throws ServiceException {
         Publication publication = new Publication(0, title, summary, content, mainImagePath, user.getLogin(), Calendar.getInstance());
         try {
-            publicationDao.addPublication(publication);
+            publicationDao.createPublication(publication);
         } catch (DaoException exception) {
             throw new ServiceException("when adding publication", exception);
         }
@@ -78,9 +76,30 @@ public enum PublicationServiceImpl implements PublicationService {
     }
 
     @Override
+    public Publication updatePublication(Long id, User user, String title, String mainImagePath, String summary, String content) throws ServiceException {
+        Publication publication = new Publication(id, title, summary, content, mainImagePath, user.getLogin(), Calendar.getInstance());
+        try {
+            publicationDao.updatePublication(publication);
+        } catch (DaoException exception) {
+            throw new ServiceException("when adding publication", exception);
+        }
+        return publication;
+    }
+
+
+    @Override
     public long findPublicationCount() throws ServiceException {
         try {
             return publicationDao.findPublicationsCount();
+        } catch (DaoException exception) {
+            throw new ServiceException(exception);
+        }
+    }
+
+    @Override
+    public void removeById(Long id) throws ServiceException {
+        try {
+            publicationDao.removeById(id);
         } catch (DaoException exception) {
             throw new ServiceException(exception);
         }

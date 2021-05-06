@@ -9,7 +9,9 @@ public class WebPagePath {
     public final static String ERROR = "/jsp/error.jsp";
     public final static String CREATE_PUBLICATION = "/jsp/create_publication.jsp";
     public final static String EDIT_PUBLICATION = "/jsp/edit_publication.jsp";
+    public final static String ADMIN_PANEL = "/jsp/admin.jsp";
     public final static String EMPTY = "";
+    public final static String REDIRECT = "redirect:";
 
     private WebPagePath() {}
 }

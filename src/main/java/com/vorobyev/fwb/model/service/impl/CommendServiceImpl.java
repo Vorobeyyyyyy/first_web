@@ -75,4 +75,23 @@ public enum CommendServiceImpl implements CommendService {
         return commends;
     }
 
+    @Override
+    public List<Commend> findAll(int startIndex, int count) throws ServiceException {
+        try {
+            return commendDao.findAll(startIndex, count);
+        } catch (DaoException exception) {
+            throw new ServiceException(exception);
+        }
+    }
+
+    @Override
+    public void removeById(Long id) throws ServiceException {
+        try {
+            commendDao.removeById(id);
+        } catch (DaoException exception) {
+            throw new ServiceException(exception);
+        }
+    }
+
+
 }

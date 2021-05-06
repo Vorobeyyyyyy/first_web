@@ -2,7 +2,7 @@ package com.vorobyev.fwb.model.dao.impl;
 
 import com.vorobyev.fwb.model.dao.UserDao;
 import com.vorobyev.fwb.model.entity.User;
-import com.vorobyev.fwb.model.entity.UserAccessLevel;
+import com.vorobyev.fwb.model.entity.UserRole;
 import com.vorobyev.fwb.exception.ConnectionPoolException;
 import com.vorobyev.fwb.exception.DaoException;
 import com.vorobyev.fwb.model.pool.ConnectionPool;
@@ -10,6 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
@@ -24,6 +26,8 @@ public class UserDaoImpl implements UserDao {
     private final static String USER_BY_LOGIN_AND_PASSWORD = "SELECT login, first_name, second_name, email, avatar_image_path, user_level FROM users WHERE login=? AND password=?";
     private final static String USER_BY_LOGIN = "SELECT login, first_name, second_name, email, avatar_image_path, user_level FROM users WHERE login=?";
     private final static String CHANGE_AVATAR = "UPDATE users SET avatar_image_path = ? WHERE login = ?";
+    private static final String USERS = "SELECT login, first_name, second_name, email, avatar_image_path, user_level FROM users ORDER BY login DESC LIMIT ? OFFSET ?";
+    private static final String REMOVE_USER = "DELETE FROM users WHERE login = ?";
 
     private UserDaoImpl() {
     }
@@ -74,7 +78,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(3, user.getFirstName());
             statement.setString(4, user.getSecondName());
             statement.setString(5, user.getEmail());
-            statement.setString(6, user.getLevel().toString());
+            statement.setString(6, user.getRole().toString());
             statement.setString(7, user.getAvatarPath());
             statement.execute();
         } catch (SQLException | ConnectionPoolException exception) {
@@ -112,6 +116,34 @@ public class UserDaoImpl implements UserDao {
         return optionalUser;
     }
 
+    @Override
+    public List<User> findAll(int startIndex, int count) throws DaoException {
+        List<User> result = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(USERS)) {
+            statement.setInt(1, count);
+            statement.setInt(2, startIndex);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                result.add(userFromResultSet(resultSet));
+            }
+        } catch (SQLException | ConnectionPoolException exception) {
+            throw new DaoException(exception);
+        }
+        return result;
+    }
+
+    @Override
+    public void removeByLogin(String login) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(REMOVE_USER)) {
+            statement.setString(1, login);
+            statement.executeUpdate();
+        } catch (SQLException | ConnectionPoolException exception) {
+            throw new DaoException(exception);
+        }
+    }
+
     private User userFromResultSet(ResultSet resultSet) throws SQLException {
         return new User(
                 resultSet.getString(1),
@@ -119,6 +151,6 @@ public class UserDaoImpl implements UserDao {
                 resultSet.getString(3),
                 resultSet.getString(4),
                 resultSet.getString(5),
-                UserAccessLevel.valueOf(resultSet.getString(6)));
+                UserRole.valueOf(resultSet.getString(6)));
     }
 }

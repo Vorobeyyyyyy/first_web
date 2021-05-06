@@ -1,9 +1,12 @@
 package com.vorobyev.fwb.controller.command.impl;
 
+import com.vorobyev.fwb.controller.ErrorPageAttribute;
+import com.vorobyev.fwb.controller.WebPagePathPrepared;
 import com.vorobyev.fwb.controller.command.Command;
 import com.vorobyev.fwb.controller.WebPagePath;
 import com.vorobyev.fwb.model.entity.User;
 import com.vorobyev.fwb.exception.ServiceException;
+import com.vorobyev.fwb.model.entity.UserRole;
 import com.vorobyev.fwb.model.service.impl.UserServiceImpl;
 import com.vorobyev.fwb.controller.SessionAttributeName;
 import org.apache.logging.log4j.Level;
@@ -13,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class RegisterCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
@@ -36,23 +40,24 @@ public class RegisterCommand implements Command {
         String phoneNumber = request.getParameter(PHONE_NUMBER);
         String email = request.getParameter(EMAIL);
         HttpSession session = request.getSession();
-        Boolean isLogin = (Boolean) session.getAttribute(SessionAttributeName.IS_LOGIN);
-        String resultPage;
-        if (!isLogin) {
-            try {
-                User user = userService.register(login, password, firstName, secondName, phoneNumber, email);
-                session.setAttribute(SessionAttributeName.IS_LOGIN, true);
-                session.setAttribute(SessionAttributeName.USER, user);
-                resultPage = WebPagePath.PROFILE;
-            } catch (ServiceException exception) {
-                logger.log(Level.ERROR, exception.getMessage());
-                request.setAttribute(ERROR_MESSAGE, exception.getMessage());
-                resultPage = WebPagePath.PROFILE;
-            }
-        } else {
-            logger.log(Level.WARN, "Already logged in");
-            resultPage = WebPagePath.PROFILE;
+        String path;
+
+        try {
+            User user = userService.register(login, password, firstName, secondName, phoneNumber, email);
+            session.setAttribute(SessionAttributeName.IS_LOGIN, true);
+            session.setAttribute(SessionAttributeName.USER, user);
+            path = WebPagePath.REDIRECT + String.format(WebPagePathPrepared.SHOW_PROFILE, user.getLogin());
+        } catch (ServiceException exception) {
+            logger.log(Level.ERROR, exception.getMessage());
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            request.setAttribute(ErrorPageAttribute.EXCEPTION, exception);
+            path = WebPagePath.ERROR;
         }
-        return resultPage;
+        return path;
+    }
+
+    @Override
+    public List<UserRole> getAllowedAccessLevels() {
+        return List.of(UserRole.GUEST);
     }
 }
