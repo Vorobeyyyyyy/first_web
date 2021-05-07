@@ -52,7 +52,7 @@ Users can upload own image files and use in publications or as profile image.
 
 ___
 ## Database structure
-![DataBase.PNG](sql/scheme.PNG)
+![scheme.png](sql/scheme.png)
 ___
 ## Technologies
 - [JDK 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) - Java Development kit 8
