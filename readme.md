@@ -9,7 +9,7 @@
 5. [Technologies](#Technologies)
 ___
 ## General info
-Worklance is a web-service that allows you to easily find orders, create orders, search for employees, contact with them and create teams.
+4DPA is news site.
 
 #### Roles
 - Guest
